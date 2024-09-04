@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {Link} from "react-router-dom";
+import { useSideBar } from "../../contexts/SidebarContext";
 
 const Sidebar = ({
                      employeesIcon,
@@ -13,11 +14,13 @@ const Sidebar = ({
                      dashboardIcon
 }) => {
 
-    const [activeNav, setActiveNav] = useState('Dashboard');
-    // const [activeNavColor, setActiveNavColor] = useState('Dashboard');
+    const {activeNav, setActiveNav} = useSideBar();
+
     const handleNavClick = (item) => {
       setActiveNav(item);
     };
+
+
     return (
         <div className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main">
             <div className="sidenav-header">
