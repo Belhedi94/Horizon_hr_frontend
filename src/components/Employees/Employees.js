@@ -1,7 +1,9 @@
 import React from 'react';
 import Header from "../Header/Header";
-import { faUsers, faBuilding, faUserGroup, faBriefcase, faPersonWalkingLuggage, faFileCirclePlus, faUserTie, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faBuilding, faUserGroup, faBriefcase, faPersonWalkingLuggage, faFileCirclePlus, faUserTie, faHouse, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Sidebar from "../Sidebar/Sidebar";
+import { Link } from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Employees = () => {
     return (
@@ -20,6 +22,13 @@ const Employees = () => {
             <Header title={"Employees management"} />
             <div className={"main-content position-relative max-height-vh-100 h-100 border-radius-lg"}>
                 <div className="container-fluid py-4">
+                    <div className={"text-end"}>
+                        <Link to={"/employees/add"}>
+                            <button className={"btn btn-dark"}>
+                                <FontAwesomeIcon icon={faPlus} size={"lg"} style={{marginRight: '5px'}}/>Add new employee
+                            </button>
+                        </Link>
+                    </div>
                     <div className="row">
                         <div className="col-12">
                             <div className="card mb-4">
