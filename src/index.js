@@ -7,11 +7,12 @@ import {SidebarProvider} from "./contexts/SidebarContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <SidebarProvider>
-      <React.StrictMode>
+  <React.StrictMode>
+      <SidebarProvider>
         <App />
-      </React.StrictMode>
-    </SidebarProvider>
+      </SidebarProvider>
+  </React.StrictMode>
+
 );
 
 reportWebVitals();
