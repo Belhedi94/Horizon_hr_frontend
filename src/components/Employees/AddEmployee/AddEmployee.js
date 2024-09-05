@@ -138,13 +138,10 @@ const AddEmployee = () => {
                                                     <label htmlFor={"mobile_phone"}>Mobile phone<span className={"red-star"}>*</span></label>
                                                     <input {...register('mobile_phone', {
                                                         required: 'Mobile phone is required',
-                                                        minLength: { value: 8, message: 'Phone number must be at least 8 characters'},
-                                                        maxLength: {value: 8, message: 'Phone number must be 8 characters'
-                                                        },
                                                         pattern: {
-                                                            value: /^[0-9]+$/,
-                                                            message: 'Phone number must only contain numbers',
-                                                        },
+                                                            value: /^[0-9]{8}$/,
+                                                            message: 'Phone number must be exactly 8 digits and contain only numbers'
+                                                        }
                                                     })}
                                                            className={"form-control"}
                                                            placeholder={"Please type the mobile phone"}
@@ -175,13 +172,10 @@ const AddEmployee = () => {
                                                         <label htmlFor={"cin"}>Cin<span className={"red-star"}>*</span></label>
                                                         <input {...register('cin', {
                                                             required: 'Cin is required',
-                                                            minLength: { value: 8, message: 'Cin must be at least 8 characters'},
-                                                            maxLength: {value: 8, message: 'Cin number must be 8 characters'
-                                                            },
                                                             pattern: {
-                                                                value: /^[0-9]+$/,
-                                                                message: 'Cin must only contain numbers',
-                                                            },
+                                                                value: /^[0-9]{8}$/,
+                                                                message: 'Phone number must be exactly 8 digits and contain only numbers'
+                                                            }
                                                         })}
                                                                className={"form-control"}
                                                                placeholder={"Please type the cin"}
