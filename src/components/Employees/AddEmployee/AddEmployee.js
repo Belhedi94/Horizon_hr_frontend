@@ -3,6 +3,8 @@ import { faUsers, faBuilding, faUserGroup, faBriefcase, faPersonWalkingLuggage, 
 import Sidebar from "../../Sidebar/Sidebar";
 import Header from "../../Header/Header";
 import {useForm} from "react-hook-form";
+import {createEmployee} from "../../../api";
+import {useNavigate} from "react-router-dom";
 import "./add_employee.css";
 
 const AddEmployee = () => {
@@ -18,8 +20,23 @@ const AddEmployee = () => {
     };
     const {register, unregister, handleSubmit, formState: {errors}} = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (employeeData) => {
+        const formData = new FormData();
+        for (const key in employeeData) {
+            if (typeof employeeData[key] === 'object') {
+                for (const subKey in employeeData[key]) {
+                    formData.append(`${key}[${subKey}]`, employeeData[key][subKey]);
+                }
+            } else {
+                formData.append(key, employeeData[key]);
+            }
+        }
+        try {
+            const newEmployee = await createEmployee(formData);
+            console.log('Employee created', newEmployee);
+        } catch (error) {
+            console.log('error here', error);
+        }
     }
     return (
         <div>
@@ -47,7 +64,7 @@ const AddEmployee = () => {
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <label htmlFor={"first_name"}>First name<span className={"red-star"}>*</span></label>
-                                                <input {...register('first_name', { required: 'First name is required' })}
+                                                <input {...register('firstName', { required: 'First name is required' })}
                                                        className={"form-control"}
                                                        placeholder={"Please type the first name"}
                                                        id={"first_name"}
@@ -58,7 +75,7 @@ const AddEmployee = () => {
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <label htmlFor={"last_name"}>Last name<span className={"red-star"}>*</span></label>
-                                                <input {...register('last_name', { required: 'Last name is required' })}
+                                                <input {...register('lastName', { required: 'Last name is required' })}
                                                        className={"form-control"}
                                                        placeholder={"Please type the last name"}
                                                        id={"last_name"}
@@ -80,7 +97,8 @@ const AddEmployee = () => {
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <label htmlFor={"password"}>Password<span className={"red-star"}>*</span></label>
-                                                <input {...register('password', {
+                                                <input type={"password"}
+                                                       {...register('password', {
                                                     required: 'Password is required',
                                                     minLength: { value: 8, message: 'Password must be at least 8 characters'},
                                                     pattern: {
@@ -102,7 +120,7 @@ const AddEmployee = () => {
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label htmlFor={"personal_email"}>Personal email<span className={"red-star"}>*</span></label>
-                                                    <input type={"email"} {...register('personal_email', {
+                                                    <input type={"email"} {...register('personalEmail', {
                                                         required: 'Personal email is required',
                                                         pattern: {
                                                             value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -113,13 +131,13 @@ const AddEmployee = () => {
                                                            placeholder={"Please type the personal email"}
                                                            id={"personal_email"}
                                                     />
-                                                    {errors.personal_email && <span style={{ color: 'red', fontSize: '12px' }}>{errors.personal_email.message}</span>}
+                                                    {errors.personalEmail && <span style={{ color: 'red', fontSize: '12px' }}>{errors.personalEmail.message}</span>}
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label htmlFor={"professional_email"}>Professional email<span className={"red-star"}>*</span></label>
-                                                    <input type={"email"} {...register('professional_email', {
+                                                    <input type={"email"} {...register('professionalEmail', {
                                                         required: 'Professional email is required',
                                                         pattern: {
                                                             value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -130,13 +148,13 @@ const AddEmployee = () => {
                                                            placeholder={"Please type the professional email"}
                                                            id={"professional_email"}
                                                     />
-                                                    {errors.professional_email && <span style={{ color: 'red', fontSize: '12px' }}>{errors.professional_email.message}</span>}
+                                                    {errors.professionalEmail && <span style={{ color: 'red', fontSize: '12px' }}>{errors.professionalEmail.message}</span>}
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label htmlFor={"mobile_phone"}>Mobile phone<span className={"red-star"}>*</span></label>
-                                                    <input {...register('mobile_phone', {
+                                                    <label htmlFor={"personal_phone"}>Mobile phone<span className={"red-star"}>*</span></label>
+                                                    <input {...register('personalPhone', {
                                                         required: 'Mobile phone is required',
                                                         pattern: {
                                                             value: /^[0-9]{8}$/,
@@ -144,10 +162,10 @@ const AddEmployee = () => {
                                                         }
                                                     })}
                                                            className={"form-control"}
-                                                           placeholder={"Please type the mobile phone"}
-                                                           id={"mobile_phone"}
+                                                           placeholder={"Please type the personal phone"}
+                                                           id={"personal_phone"}
                                                     />
-                                                    {errors.mobile_phone && <span style={{ color: 'red', fontSize: '12px' }}>{errors.mobile_phone.message}</span>}
+                                                    {errors.personalPhone && <span style={{ color: 'red', fontSize: '12px' }}>{errors.personalPhone.message}</span>}
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
@@ -187,7 +205,7 @@ const AddEmployee = () => {
                                                 <div className="col-md-6">
                                                     <div className="form-group">
                                                         <label htmlFor={"date_of_birth"}>Date of birth<span className={"red-star"}>*</span></label>
-                                                        <input type={"date"}{...register('date_of_birth', {
+                                                        <input type={"date"}{...register('dateOfBirth', {
                                                             required: 'Date of birth is required'
                                                         })}
                                                                className={"form-control"}
@@ -221,7 +239,7 @@ const AddEmployee = () => {
                                                         <select
                                                             id="marital_status"
                                                             className={`form-control ${errors.marital_status ? 'is-invalid' : ''}`}
-                                                            {...register('marital_status', {
+                                                            {...register('maritalStatus', {
                                                                 required: 'Marital status is required',
                                                                 validate: (value) => value !== "" || 'Please select a marital status'
                                                             })}
@@ -235,8 +253,12 @@ const AddEmployee = () => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label htmlFor="profile_image" className="form-control-label">Profile image</label>
-                                                        <input id={"profile_image"} className="form-control" type={"file"} />
+                                                        <label htmlFor={"profile_image"}>Cin<span className={"red-star"}>*</span></label>
+                                                        <input {...register('profileImage')}
+                                                               className={"form-control"}
+                                                               id={"profile_image"}
+                                                               type={"file"}
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>
@@ -248,8 +270,8 @@ const AddEmployee = () => {
                                                 <label htmlFor={"contract_type"}>Contract type<span className={"red-star"}>*</span></label>
                                                 <select
                                                     id="contract_type"
-                                                    className={`form-control ${errors.contract_type ? 'is-invalid' : ''}`}
-                                                    {...register('contract_type', {
+                                                    className={`form-control ${errors.contractType ? 'is-invalid' : ''}`}
+                                                    {...register('employmentDetails.contractType', {
                                                         required: 'Contract type is required',
                                                         validate: (value) => value !== "" || 'Please select a contract type'
                                                     })}
@@ -262,7 +284,7 @@ const AddEmployee = () => {
                                                     <option value="INTERN">INTERN</option>
                                                     <option value="KARAMA">KARAMA</option>
                                                 </select>
-                                                {errors.contract_type && <span style={{ color: 'red', fontSize: '12px' }}>{errors.contract_type.message}</span>}
+                                                {errors.employmentDetails?.contractType && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.contractType.message}</span>}
                                             </div>
                                         </div>
                                         <div className="col-md-6">
@@ -271,7 +293,7 @@ const AddEmployee = () => {
                                                 <select
                                                     id="employment_type"
                                                     className={`form-control ${errors.employment_type ? 'is-invalid' : ''}`}
-                                                    {...register('employment_type', {
+                                                    {...register('employmentDetails.employmentType', {
                                                         required: 'Employment type is required',
                                                         validate: (value) => value !== "" || 'Please select the employment type'
                                                     })}
@@ -280,26 +302,26 @@ const AddEmployee = () => {
                                                     <option value="Full-Time">Full-Time</option>
                                                     <option value="Part-Time">Part-Time</option>
                                                 </select>
-                                                {errors.employment_type && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employment_type.message}</span>}
+                                                {errors.employmentDetails?.employmentType && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.employmentType.message}</span>}
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <label htmlFor={"joining_date"}>Joining date<span className={"red-star"}>*</span></label>
-                                                <input type={"date"} {...register('joining_date', {
+                                                <input type={"date"} {...register('employmentDetails.joiningDate', {
                                                     required: 'Joining date is required'
                                                 })}
                                                        className={"form-control"}
                                                        placeholder={"Please select joining date"}
                                                        id={"joining_date"}
                                                 />
-                                                {errors.joining_date && <span style={{ color: 'red', fontSize: '12px' }}>{errors.joining_date.message}</span>}
+                                                {errors.employmentDetails?.joiningDate && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.joiningDate.message}</span>}
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <label htmlFor={"probation_period"}>Probation period<span className={"red-star"}>*</span></label>
-                                                <input {...register('probation_period', {
+                                                <input {...register('employmentDetails.probationPeriod', {
                                                     required: 'Probation period is required',
                                                     pattern: {
                                                         value: /^[0-9]+$/,
@@ -310,13 +332,13 @@ const AddEmployee = () => {
                                                        placeholder={"Please type the probation period in days"}
                                                        id={"probation_period"}
                                                 />
-                                                {errors.probation_period && <span style={{ color: 'red', fontSize: '12px' }}>{errors.probation_period.message}</span>}
+                                                {errors.employmentDetails?.probationPeriod && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.probationPeriod.message}</span>}
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <label htmlFor={"salary"}>Salary (Net)<span className={"red-star"}>*</span></label>
-                                                <input {...register('salary', {
+                                                <input {...register('employmentDetails.salary', {
                                                     required: 'Salary is required',
                                                     pattern: {
                                                         value: /^[0-9]+$/,
@@ -327,7 +349,7 @@ const AddEmployee = () => {
                                                        placeholder={"Please type the salary"}
                                                        id={"salary"}
                                                 />
-                                                {errors.salary && <span style={{ color: 'red', fontSize: '12px' }}>{errors.salary.message}</span>}
+                                                {errors.employmentDetails?.salary && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.salary.message}</span>}
                                             </div>
                                         </div>
                                         <div className="col-md-6">
@@ -336,7 +358,7 @@ const AddEmployee = () => {
                                                 <select
                                                     id="position"
                                                     className={`form-control ${errors.employment_type ? 'is-invalid' : ''}`}
-                                                    {...register('position', {
+                                                    {...register('employmentDetails.position', {
                                                         required: 'Position type is required',
                                                         validate: (value) => value !== "" || 'Please select a position'
                                                     })}
@@ -345,7 +367,7 @@ const AddEmployee = () => {
                                                     <option value="Developer">Developer</option>
                                                     <option value="Designer">Designer</option>
                                                 </select>
-                                                {errors.position && <span style={{ color: 'red', fontSize: '12px' }}>{errors.position.message}</span>}
+                                                {errors.employmentDetails?.position && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.position.message}</span>}
                                             </div>
                                         </div>
                                         <div className="col-md-6">
@@ -354,7 +376,7 @@ const AddEmployee = () => {
                                                 <select
                                                     id="team"
                                                     className={`form-control ${errors.employment_type ? 'is-invalid' : ''}`}
-                                                    {...register('team', {
+                                                    {...register('employmentDetails.team', {
                                                         required: 'Team is required',
                                                         validate: (value) => value !== "" || 'Please select a team'
                                                     })}
@@ -363,7 +385,7 @@ const AddEmployee = () => {
                                                     <option value="IT">IT</option>
                                                     <option value="HR">HR</option>
                                                 </select>
-                                                {errors.team && <span style={{ color: 'red', fontSize: '12px' }}>{errors.team.message}</span>}
+                                                {errors.employmentDetails?.team && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.team.message}</span>}
                                             </div>
                                         </div>
                                         {cnssFieldIsHidden === 'block' && (
@@ -371,14 +393,14 @@ const AddEmployee = () => {
                                                 <div className="form-group">
                                                     <label htmlFor="cnss">CNSS registration number<span className="red-star">*</span></label>
                                                     <input
-                                                        {...register('cnss', {
+                                                        {...register('employmentDetails.cnss', {
                                                             required: 'CNSS is required'
                                                         })}
                                                         className="form-control"
                                                         placeholder="Please type CNSS number"
                                                         id="cnss"
                                                     />
-                                                    {errors.cnss && <span style={{ color: 'red', fontSize: '12px' }}>{errors.cnss.message}</span>}
+                                                    {errors.employmentDetails?.cnss && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.cnss.message}</span>}
                                                 </div>
                                             </div>
                                         )}
@@ -416,7 +438,6 @@ const AddEmployee = () => {
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
             </div>
