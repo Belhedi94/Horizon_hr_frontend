@@ -9,6 +9,10 @@ import "./add_employee.css";
 
 const AddEmployee = () => {
     const [cnssFieldIsHidden, setCnssFieldIsHidden] = useState('none');
+    const [serverErrorMessage, setServerErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const navigate = useNavigate();
+
     const handleCnssField = (e) => {
         const contractType = e.target.value;
         if (contractType === 'CDI' || contractType === 'CDD')
@@ -23,19 +27,28 @@ const AddEmployee = () => {
     const onSubmit = async (employeeData) => {
         const formData = new FormData();
         for (const key in employeeData) {
-            if (typeof employeeData[key] === 'object') {
-                for (const subKey in employeeData[key]) {
-                    formData.append(`${key}[${subKey}]`, employeeData[key][subKey]);
+            if (key === 'profileImage') {
+                if (employeeData[key][0]) { // Check if a file was selected
+                    formData.append(key, employeeData[key][0]); // Append the file object
                 }
-            } else {
-                formData.append(key, employeeData[key]);
             }
+            else {
+                if (typeof employeeData[key] === 'object') {
+                    for (const subKey in employeeData[key])
+                        formData.append(`${key}[${subKey}]`, employeeData[key][subKey]);
+                } else
+                    formData.append(key, employeeData[key]);
+            }
+
         }
+        formData.append('EmploymentStatus', 'Active');
         try {
             const newEmployee = await createEmployee(formData);
-            console.log('Employee created', newEmployee);
+            setServerErrorMessage('');
+            setSuccessMessage("New employee created successfully.");
+            setTimeout(() => navigate('/employees'), 2000);
         } catch (error) {
-            console.log('error here', error);
+            setServerErrorMessage('Failed to create the employee');
         }
     }
     return (
@@ -253,7 +266,7 @@ const AddEmployee = () => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label htmlFor={"profile_image"}>Cin<span className={"red-star"}>*</span></label>
+                                                        <label htmlFor={"profile_image"}>Profile image<span className={"red-star"}>*</span></label>
                                                         <input {...register('profileImage')}
                                                                className={"form-control"}
                                                                id={"profile_image"}
@@ -358,16 +371,16 @@ const AddEmployee = () => {
                                                 <select
                                                     id="position"
                                                     className={`form-control ${errors.employment_type ? 'is-invalid' : ''}`}
-                                                    {...register('employmentDetails.position', {
+                                                    {...register('employmentDetails.positionId', {
                                                         required: 'Position type is required',
                                                         validate: (value) => value !== "" || 'Please select a position'
                                                     })}
                                                 >
                                                     <option value="">Select a position</option>
-                                                    <option value="Developer">Developer</option>
+                                                    <option value="7B2DC76E-96C2-483C-F25E-08DCB1B24F03">Developer</option>
                                                     <option value="Designer">Designer</option>
                                                 </select>
-                                                {errors.employmentDetails?.position && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.position.message}</span>}
+                                                {errors.employmentDetails?.positionId && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.positionId.message}</span>}
                                             </div>
                                         </div>
                                         <div className="col-md-6">
@@ -376,16 +389,16 @@ const AddEmployee = () => {
                                                 <select
                                                     id="team"
                                                     className={`form-control ${errors.employment_type ? 'is-invalid' : ''}`}
-                                                    {...register('employmentDetails.team', {
+                                                    {...register('employmentDetails.teamId', {
                                                         required: 'Team is required',
                                                         validate: (value) => value !== "" || 'Please select a team'
                                                     })}
                                                 >
                                                     <option value="">Select a team</option>
-                                                    <option value="IT">IT</option>
+                                                    <option value="54A78A11-B163-4CE0-EFBD-08DCB1B238D2">IT</option>
                                                     <option value="HR">HR</option>
                                                 </select>
-                                                {errors.employmentDetails?.team && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.team.message}</span>}
+                                                {errors.employmentDetails?.teamId && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.teamId.message}</span>}
                                             </div>
                                         </div>
                                         {cnssFieldIsHidden === 'block' && (
@@ -433,7 +446,9 @@ const AddEmployee = () => {
                                             </div>
                                         </div>
                                     </div>
-                                        <button className={"btn btn-dark btn-sm ms-auto"}>Save</button>
+                                    <button className={"btn btn-dark btn-sm ms-auto"}>Save</button>
+                                    {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
+                                    {successMessage && <p className="success-message">{successMessage}</p>}
                                 </div>
                             </div>
                         </div>

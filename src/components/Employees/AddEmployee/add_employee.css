@@ -1,3 +1,7 @@
-.red-star {
+.red-star, .error-message {
     color: red;
+}
+
+.success-message {
+    color: green;
 }
