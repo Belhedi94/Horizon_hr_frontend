@@ -134,14 +134,14 @@ const EmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHi
                         <div className="form-group">
                             <label htmlFor="cnss">CNSS registration number<span className="red-star">*</span></label>
                             <input
-                                {...register('employmentDetails.cnss', {
+                                {...register('CnssRegistrationNumber', {
                                     required: 'CNSS is required'
                                 })}
                                 className="form-control"
                                 placeholder="Please type CNSS number"
                                 id="cnss"
                             />
-                            {errors.employmentDetails?.cnss && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.cnss.message}</span>}
+                            {errors.CnssRegistrationNumber && <span style={{ color: 'red', fontSize: '12px' }}>{errors.CnssRegistrationNumber.message}</span>}
                         </div>
                     </div>
                 )}

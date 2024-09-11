@@ -5,12 +5,12 @@ import Header from "../../Header/Header";
 import {useForm} from "react-hook-form";
 import {createEmployee} from "../../../api";
 import {useNavigate} from "react-router-dom";
-import "./add_employee.css";
 import ContactInformation from "./Form/ContactInformation";
 import EmployeeInformation from "./Form/EmployeeInformation";
 import AdditionalInformation from "./Form/AdditionalInformation";
 import BankAccountInformation from "./Form/BankAccountInformation";
 import EmploymentInformation from "./Form/EmploymentInformation";
+import "./add_employee.css";
 
 const AddEmployee = () => {
     const [cnssFieldIsHidden, setCnssFieldIsHidden] = useState('none');
@@ -27,15 +27,14 @@ const AddEmployee = () => {
             unregister('cnss');
         }
     };
-    const {register, unregister, handleSubmit, formState: {errors}} = useForm();
+    const {register, unregister, handleSubmit, control, formState: {errors}} = useForm();
 
     const onSubmit = async (employeeData) => {
         const formData = new FormData();
         for (const key in employeeData) {
             if (key === 'profileImage') {
-                if (employeeData[key][0]) {
+                if (employeeData[key][0])
                     formData.append(key, employeeData[key][0]);
-                }
             }
             else {
                 if (typeof employeeData[key] === 'object') {
@@ -86,10 +85,12 @@ const AddEmployee = () => {
                                         handleCnssField={handleCnssField}
                                         cnssFieldIsHidden={cnssFieldIsHidden}
                                     />
-                                    <BankAccountInformation register={register} errors={errors}/>
-
+                                    <BankAccountInformation
+                                        register={register}
+                                        errors={errors}
+                                        control={control}
+                                    />
                                     <button className={"btn btn-dark btn-sm ms-auto"}>Save</button>
-
                                     {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
                                     {successMessage && <p className="success-message">{successMessage}</p>}
                                 </div>
