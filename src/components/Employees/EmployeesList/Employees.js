@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from "../Header/Header";
+import Header from "../../Header/Header";
 import { faUsers, faBuilding, faUserGroup, faBriefcase, faPersonWalkingLuggage, faFileCirclePlus, faUserTie, faHouse, faPlus } from '@fortawesome/free-solid-svg-icons';
-import Sidebar from "../Sidebar/Sidebar";
+import Sidebar from "../../Sidebar/Sidebar";
 import { Link } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -72,7 +72,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">23/04/18</span>
                                                 </td>
                                                 <td className="align-middle">
-                                                    <a href=""
+                                                    <a href="src/components/Employees/EmployeesList/Employees"
                                                        className="text-secondary font-weight-bold text-xs"
                                                        data-toggle="tooltip" data-original-title="Edit user">
                                                         Edit
@@ -103,7 +103,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">11/01/19</span>
                                                 </td>
                                                 <td className="align-middle">
-                                                    <a href=""
+                                                    <a href="src/components/Employees/EmployeesList/Employees"
                                                        className="text-secondary font-weight-bold text-xs"
                                                        data-toggle="tooltip" data-original-title="Edit user">
                                                         Edit
@@ -135,7 +135,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">19/09/17</span>
                                                 </td>
                                                 <td className="align-middle">
-                                                    <a href=""
+                                                    <a href="src/components/Employees/EmployeesList/Employees"
                                                        className="text-secondary font-weight-bold text-xs"
                                                        data-toggle="tooltip" data-original-title="Edit user">
                                                         Edit
@@ -167,7 +167,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">24/12/08</span>
                                                 </td>
                                                 <td className="align-middle">
-                                                    <a href=""
+                                                    <a href="src/components/Employees/EmployeesList/Employees"
                                                        className="text-secondary font-weight-bold text-xs"
                                                        data-toggle="tooltip" data-original-title="Edit user">
                                                         Edit
@@ -199,7 +199,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">04/10/21</span>
                                                 </td>
                                                 <td className="align-middle">
-                                                    <a href=""
+                                                    <a href="src/components/Employees/EmployeesList/Employees"
                                                        className="text-secondary font-weight-bold text-xs"
                                                        data-toggle="tooltip" data-original-title="Edit user">
                                                         Edit
@@ -231,7 +231,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">14/09/20</span>
                                                 </td>
                                                 <td className="align-middle">
-                                                    <a href=""
+                                                    <a href="src/components/Employees/EmployeesList/Employees"
                                                        className="text-secondary font-weight-bold text-xs"
                                                        data-toggle="tooltip" data-original-title="Edit user">
                                                         Edit

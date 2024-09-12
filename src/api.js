@@ -14,3 +14,12 @@ export const createEmployee = async (employeeData) => {
         throw new Error(error.response ? error.response.message : 'Error creating employee');
     }
 }
+
+export const getEmployeeData = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/users/${id}`);
+        return response.data;
+    } catch(error) {
+        throw new Error(error.response ? error.response.message : 'Error getting employee data');
+    }
+}

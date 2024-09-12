@@ -55,6 +55,7 @@ const AddEmployee = () => {
             setServerErrorMessage('Failed to create the employee');
         }
     }
+
     return (
         <div>
             <Sidebar
