@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { faUsers, faBuilding, faUserGroup, faBriefcase, faPersonWalkingLuggage, faFileCirclePlus, faUserTie, faHouse } from '@fortawesome/free-solid-svg-icons';
-import Sidebar from "../../Sidebar/Sidebar";
-import Header from "../../Header/Header";
 import {useForm} from "react-hook-form";
 import {createEmployee} from "../../../api";
 import {useNavigate} from "react-router-dom";
@@ -11,6 +8,7 @@ import AdditionalInformation from "./Form/AdditionalInformation";
 import BankAccountInformation from "./Form/BankAccountInformation";
 import EmploymentInformation from "./Form/EmploymentInformation";
 import "./add_employee.css";
+import Layout from "../../Layout/Layout";
 
 const AddEmployee = () => {
     const [cnssFieldIsHidden, setCnssFieldIsHidden] = useState('none');
@@ -57,51 +55,36 @@ const AddEmployee = () => {
     }
 
     return (
-        <div>
-            <Sidebar
-                employeesIcon={faUsers}
-                departmentIcon={faBuilding}
-                teamsIcon={faUserGroup}
-                positionsIcon={faBriefcase}
-                leaveRequestsIcon={faPersonWalkingLuggage}
-                documentRequest={faFileCirclePlus}
-                jobOffersIcon={faUserTie}
-                dashboardIcon={faHouse}
-
-            />
-            <div className={"main-content position-relative max-height-vh-100 h-500 border-radius-lg"}>
-            <Header title={"Employees management"} />
-            <div className={"container-fluid py-4"}>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="card">
-                                <div className="card-body">
-                                    <EmployeeInformation register={register} errors={errors}/>
-                                    <ContactInformation register={register} errors={errors}/>
-                                    <AdditionalInformation register={register} errors={errors}/>
-                                    <EmploymentInformation
-                                        register={register}
-                                        errors={errors}
-                                        handleCnssField={handleCnssField}
-                                        cnssFieldIsHidden={cnssFieldIsHidden}
-                                    />
-                                    <BankAccountInformation
-                                        register={register}
-                                        errors={errors}
-                                        control={control}
-                                    />
-                                    <button className={"btn btn-dark btn-sm ms-auto"}>Save</button>
-                                    {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
-                                    {successMessage && <p className="success-message">{successMessage}</p>}
-                                </div>
+        <Layout title={"Employees management"}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="card">
+                            <div className="card-body">
+                                <EmployeeInformation register={register} errors={errors}/>
+                                <ContactInformation register={register} errors={errors}/>
+                                <AdditionalInformation register={register} errors={errors}/>
+                                <EmploymentInformation
+                                    register={register}
+                                    errors={errors}
+                                    handleCnssField={handleCnssField}
+                                    cnssFieldIsHidden={cnssFieldIsHidden}
+                                />
+                                <BankAccountInformation
+                                    register={register}
+                                    errors={errors}
+                                    control={control}
+                                />
+                                <button className={"btn btn-dark btn-sm ms-auto"}>Save</button>
+                                {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
+                                {successMessage && <p className="success-message">{successMessage}</p>}
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-            </div>
-        </div>
+                </div>
+            </form>
+        </Layout>
+
     );
 };
 

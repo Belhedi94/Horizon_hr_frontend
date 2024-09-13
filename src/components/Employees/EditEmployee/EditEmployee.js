@@ -1,20 +1,10 @@
 import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
-
-import {
-    faBriefcase,
-    faBuilding,
-    faFileCirclePlus, faHouse,
-    faPersonWalkingLuggage,
-    faUserGroup,
-    faUsers, faUserTie
-} from "@fortawesome/free-solid-svg-icons";
-import Sidebar from "../../Sidebar/Sidebar";
-import Header from "../../Header/Header";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {getEmployeeData} from "../../../api";
 import EditEmployeeInformation from "./Form/EditEmployeeInformation";
+import Layout from "../../Layout/Layout";
 
 const EditEmployee = () => {
     const {id} = useParams();
@@ -68,51 +58,35 @@ const EditEmployee = () => {
     }
 
     return(
-        <div>
-            <Sidebar
-                employeesIcon={faUsers}
-                departmentIcon={faBuilding}
-                teamsIcon={faUserGroup}
-                positionsIcon={faBriefcase}
-                leaveRequestsIcon={faPersonWalkingLuggage}
-                documentRequest={faFileCirclePlus}
-                jobOffersIcon={faUserTie}
-                dashboardIcon={faHouse}
-
-            />
-            <div className={"main-content position-relative max-height-vh-100 h-500 border-radius-lg"}>
-                <Header title={"Edit Employee"} />
-                <div className={"container-fluid py-4"}>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="card">
-                                    <div className="card-body">
-                                        <EditEmployeeInformation register={register} errors={errors}/>
-                                        {/*<ContactInformation register={register} errors={errors}/>*/}
-                                        {/*<AdditionalInformation register={register} errors={errors}/>*/}
-                                        {/*<EmploymentInformation*/}
-                                        {/*    register={register}*/}
-                                        {/*    errors={errors}*/}
-                                        {/*    handleCnssField={handleCnssField}*/}
-                                        {/*    cnssFieldIsHidden={cnssFieldIsHidden}*/}
-                                        {/*/>*/}
-                                        {/*<BankAccountInformation*/}
-                                        {/*    register={register}*/}
-                                        {/*    errors={errors}*/}
-                                        {/*    control={control}*/}
-                                        {/*/>*/}
-                                        {/*<button className={"btn btn-dark btn-sm ms-auto"}>Save</button>*/}
-                                        {/*{serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}*/}
-                                        {/*{successMessage && <p className="success-message">{successMessage}</p>}*/}
-                                    </div>
-                                </div>
+        <Layout title={"Edit Employee"}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="card">
+                            <div className="card-body">
+                                <EditEmployeeInformation register={register} errors={errors}/>
+                                {/*<ContactInformation register={register} errors={errors}/>*/}
+                                {/*<AdditionalInformation register={register} errors={errors}/>*/}
+                                {/*<EmploymentInformation*/}
+                                {/*    register={register}*/}
+                                {/*    errors={errors}*/}
+                                {/*    handleCnssField={handleCnssField}*/}
+                                {/*    cnssFieldIsHidden={cnssFieldIsHidden}*/}
+                                {/*/>*/}
+                                {/*<BankAccountInformation*/}
+                                {/*    register={register}*/}
+                                {/*    errors={errors}*/}
+                                {/*    control={control}*/}
+                                {/*/>*/}
+                                {/*<button className={"btn btn-dark btn-sm ms-auto"}>Save</button>*/}
+                                {/*{serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}*/}
+                                {/*{successMessage && <p className="success-message">{successMessage}</p>}*/}
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </form>
+        </Layout>
     );
 };
 

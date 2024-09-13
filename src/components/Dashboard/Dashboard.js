@@ -1,35 +1,17 @@
 import React from 'react';
-import { faUsers, faBuilding, faUserGroup, faBriefcase, faPersonWalkingLuggage, faFileCirclePlus, faUserTie, faHouse } from '@fortawesome/free-solid-svg-icons';
-
-import Sidebar from "../Sidebar/Sidebar";
-import Header from "../Header/Header";
+import { faUsers, faBuilding, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import StatisticsCard from "../StatisticsCard/StatisticsCard";
+import Layout from "../Layout/Layout";
 
 const Dashboard = () =>  {
     return (
-        <div>
-            <Sidebar
-                employeesIcon={faUsers}
-                departmentIcon={faBuilding}
-                teamsIcon={faUserGroup}
-                positionsIcon={faBriefcase}
-                leaveRequestsIcon={faPersonWalkingLuggage}
-                documentRequest={faFileCirclePlus}
-                jobOffersIcon={faUserTie}
-                dashboardIcon={faHouse}
-
-            />
-            <div className={"main-content position-relative max-height-vh-100 h-500 border-radius-lg"}>
-                <Header title={"Dashboard"} />
-                <div className={"container-fluid py-4"}>
-                    <div className="row">
-                        <StatisticsCard title={"Total users"} count={100} icon={faUserGroup}/>
-                        <StatisticsCard title={"Departments"} count={100} icon={faBuilding}/>
-                        <StatisticsCard title={"Teams"} count={100} icon={faUsers}/>
-                    </div>
-                </div>
+        <Layout title={"Dashboard"}>
+            <div className="row">
+                <StatisticsCard title={"Total users"} count={100} icon={faUserGroup}/>
+                <StatisticsCard title={"Departments"} count={100} icon={faBuilding}/>
+                <StatisticsCard title={"Teams"} count={100} icon={faUsers}/>
             </div>
-        </div>
+        </Layout>
     );
 };
 export default Dashboard;
