@@ -1,7 +1,6 @@
 import React from "react";
 
-const EmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHidden}) => {
-
+const EditEmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHidden}) => {
     return(
         <div>
             <p className="text-uppercase text-sm">Employment information</p>
@@ -105,7 +104,7 @@ const EmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHi
                             })}
                         >
                             <option value="">Select a position</option>
-                            <option value="7B2DC76E-96C2-483C-F25E-08DCB1B24F03">Developer</option>
+                            <option value="7b2dc76e-96c2-483c-f25e-08dcb1b24f03">Developer</option>
                             <option value="Designer">Designer</option>
                         </select>
                         {errors.employmentDetails?.positionId && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.positionId.message}</span>}
@@ -123,7 +122,7 @@ const EmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHi
                             })}
                         >
                             <option value="">Select a team</option>
-                            <option value="54A78A11-B163-4CE0-EFBD-08DCB1B238D2">IT</option>
+                            <option value="54a78a11-b163-4ce0-efbd-08dcb1b238d2">IT</option>
                             <option value="HR">HR</option>
                         </select>
                         {errors.employmentDetails?.teamId && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.teamId.message}</span>}
@@ -134,14 +133,13 @@ const EmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHi
                         <div className="form-group">
                             <label htmlFor="cnss">CNSS registration number<span className="red-star">*</span></label>
                             <input
-                                {...register('CnssRegistrationNumber', {
+                                {...register('cnssRegistrationNumber', {
                                     required: 'CNSS is required'
                                 })}
                                 className="form-control"
-                                placeholder="Please type CNSS number"
                                 id="cnss"
                             />
-                            {errors.CnssRegistrationNumber && <span style={{ color: 'red', fontSize: '12px' }}>{errors.CnssRegistrationNumber.message}</span>}
+                            {errors.cnssRegistrationNumber && <span style={{ color: 'red', fontSize: '12px' }}>{errors.cnssRegistrationNumber.message}</span>}
                         </div>
                     </div>
                 )}
@@ -151,4 +149,4 @@ const EmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHi
     );
 };
 
-export default EmploymentInformation;
+export default EditEmploymentInformation;

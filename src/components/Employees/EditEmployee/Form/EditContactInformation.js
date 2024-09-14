@@ -1,6 +1,6 @@
 import React from "react";
 
-const ContactInformation = ({register, errors}) => {
+const EditContactInformation = ({register, errors}) => {
     return (
         <div>
             <p className="text-uppercase text-sm">Contact Information</p>
@@ -16,7 +16,6 @@ const ContactInformation = ({register, errors}) => {
                             }
                         })}
                                className={"form-control"}
-                               placeholder={"Please type the personal email"}
                                id={"personal_email"}
                         />
                         {errors.personalEmail && <span style={{ color: 'red', fontSize: '12px' }}>{errors.personalEmail.message}</span>}
@@ -33,7 +32,6 @@ const ContactInformation = ({register, errors}) => {
                             }
                         })}
                                className={"form-control"}
-                               placeholder={"Please type the professional email"}
                                id={"professional_email"}
                         />
                         {errors.professionalEmail && <span style={{ color: 'red', fontSize: '12px' }}>{errors.professionalEmail.message}</span>}
@@ -50,7 +48,6 @@ const ContactInformation = ({register, errors}) => {
                             }
                         })}
                                className={"form-control"}
-                               placeholder={"Please type the personal phone"}
                                id={"personal_phone"}
                         />
                         {errors.personalPhone && <span style={{ color: 'red', fontSize: '12px' }}>{errors.personalPhone.message}</span>}
@@ -63,7 +60,6 @@ const ContactInformation = ({register, errors}) => {
                             required: 'Address is required',
                         })}
                                className={"form-control"}
-                               placeholder={"Please type the address"}
                                id={"address"}
                         />
                         {errors.address && <span style={{ color: 'red', fontSize: '12px' }}>{errors.address.message}</span>}
@@ -75,4 +71,4 @@ const ContactInformation = ({register, errors}) => {
     );
 };
 
-export default ContactInformation;
+export default EditContactInformation;

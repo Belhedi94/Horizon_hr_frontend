@@ -1,4 +1,4 @@
-import axios, {toFormData} from 'axios';
+import axios from 'axios';
 
 const API_URL = 'https://localhost:7292/api';
 
@@ -18,7 +18,7 @@ export const createEmployee = async (employeeData) => {
 export const getEmployeeData = async (id) => {
     try {
         const response = await axios.get(`${API_URL}/users/${id}`);
-        return response.data;
+        return response.data.data;
     } catch(error) {
         throw new Error(error.response ? error.response.message : 'Error getting employee data');
     }

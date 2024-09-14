@@ -1,6 +1,6 @@
 import React from "react";
 
-const AdditionalInformation = ({register, errors}) => {
+const EditAdditionalInformation = ({register, errors}) => {
     return(
         <div>
             <p className="text-uppercase text-sm">Additional information</p>
@@ -16,7 +16,6 @@ const AdditionalInformation = ({register, errors}) => {
                             }
                         })}
                                className={"form-control"}
-                               placeholder={"Please type the cin"}
                                id={"cin"}
                         />
                         {errors.cin && <span style={{ color: 'red', fontSize: '12px' }}>{errors.cin.message}</span>}
@@ -29,7 +28,6 @@ const AdditionalInformation = ({register, errors}) => {
                             required: 'Date of birth is required'
                         })}
                                className={"form-control"}
-                               placeholder={"Please type the date of birth"}
                                id={"date_of_birth"}
                         />
                         {errors.date_of_birth && <span style={{ color: 'red', fontSize: '12px' }}>{errors.date_of_birth.message}</span>}
@@ -65,15 +63,15 @@ const AdditionalInformation = ({register, errors}) => {
                             })}
                         >
                             <option value="">Select marital status</option>
-                            <option value="S">Single</option>
-                            <option value="M">Married</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
                         </select>
                         {errors.marital_status && <span style={{ color: 'red', fontSize: '12px' }}>{errors.marital_status.message}</span>}
                     </div>
                 </div>
                 <div className="col-md-6">
                     <div className="form-group">
-                        <label htmlFor={"profile_image"}>Profile image<span className={"red-star"}>*</span></label>
+                        <label htmlFor={"profile_image"}>Profile image</label>
                         <input {...register('profileImage')}
                                className={"form-control"}
                                id={"profile_image"}
@@ -87,4 +85,4 @@ const AdditionalInformation = ({register, errors}) => {
     );
 };
 
-export default AdditionalInformation;
+export default EditAdditionalInformation;

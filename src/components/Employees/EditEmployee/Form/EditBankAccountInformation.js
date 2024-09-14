@@ -1,7 +1,7 @@
 import React from "react";
 import {useWatch} from "react-hook-form";
 
-const BankAccountInformation = ({register, errors, control}) => {
+const EditBankAccountInformation = ({register, errors, control}) => {
     const holderName = useWatch({control, name: 'bankAccount.holderName'});
     const bankName = useWatch({control, name: 'bankAccount.bankName'});
     const accountNumber = useWatch({control, name: 'bankAccount.accountNumber'});
@@ -73,4 +73,4 @@ const BankAccountInformation = ({register, errors, control}) => {
     );
 };
 
-export default BankAccountInformation;
+export default EditBankAccountInformation;

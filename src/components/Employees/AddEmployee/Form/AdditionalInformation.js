@@ -65,8 +65,8 @@ const AdditionalInformation = ({register, errors}) => {
                             })}
                         >
                             <option value="">Select marital status</option>
-                            <option value="S">Single</option>
-                            <option value="M">Married</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
                         </select>
                         {errors.marital_status && <span style={{ color: 'red', fontSize: '12px' }}>{errors.marital_status.message}</span>}
                     </div>
