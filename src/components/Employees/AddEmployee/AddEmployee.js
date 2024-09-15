@@ -9,6 +9,7 @@ import BankAccountInformation from "./Form/BankAccountInformation";
 import EmploymentInformation from "./Form/EmploymentInformation";
 import "./add_employee.css";
 import Layout from "../../Layout/Layout";
+import {buildFormatData} from "../../utils/formatDataHelper";
 
 const AddEmployee = () => {
     const [cnssFieldIsHidden, setCnssFieldIsHidden] = useState('none');
@@ -28,24 +29,9 @@ const AddEmployee = () => {
     const {register, unregister, handleSubmit, control, formState: {errors}} = useForm();
 
     const onSubmit = async (employeeData) => {
-        const formData = new FormData();
-        for (const key in employeeData) {
-            if (key === 'profileImage') {
-                if (employeeData[key][0])
-                    formData.append(key, employeeData[key][0]);
-            }
-            else {
-                if (typeof employeeData[key] === 'object') {
-                    for (const subKey in employeeData[key])
-                        formData.append(`${key}[${subKey}]`, employeeData[key][subKey]);
-                } else
-                    formData.append(key, employeeData[key]);
-            }
-
-        }
-        formData.append('EmploymentStatus', 'Active');
+        const formData = buildFormatData(employeeData);
         try {
-            const newEmployee = await createEmployee(formData);
+            await createEmployee(formData);
             setServerErrorMessage('');
             setSuccessMessage("New employee created successfully.");
             setTimeout(() => navigate('/employees'), 2000);

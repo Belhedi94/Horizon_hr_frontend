@@ -54,6 +54,24 @@ const EditEmployeeInformation = ({register, errors}) => {
                         {errors.password && <span style={{ color: 'red', fontSize: '12px' }}>{errors.password.message}</span>}
                     </div>
                 </div>
+                <div className="col-md-6">
+                    <div className="form-group">
+                        <label htmlFor={"status"}>Status<span className={"red-star"}>*</span></label>
+                        <select
+                            id="status"
+                            className={`form-control ${errors.status ? 'is-invalid' : ''}`}
+                            {...register('status', {
+                                required: 'Status is required',
+                                validate: (value) => value !== "" || 'Please select a status'
+                            })}
+                        >
+                            <option value="">Select a status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                        {errors.status && <span style={{ color: 'red', fontSize: '12px' }}>{errors.status.message}</span>}
+                    </div>
+                </div>
             </div>
             <hr className="horizontal dark" />
         </div>

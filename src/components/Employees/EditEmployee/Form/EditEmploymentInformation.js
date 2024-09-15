@@ -128,7 +128,7 @@ const EditEmploymentInformation = ({register, errors, handleCnssField, cnssField
                         {errors.employmentDetails?.teamId && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.teamId.message}</span>}
                     </div>
                 </div>
-                {cnssFieldIsHidden === 'block' && (
+                {!cnssFieldIsHidden && (
                     <div className="col-md-6" style={{ display: cnssFieldIsHidden }}>
                         <div className="form-group">
                             <label htmlFor="cnss">CNSS registration number<span className="red-star">*</span></label>
