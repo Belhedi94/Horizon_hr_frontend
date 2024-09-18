@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from "react";
-import {useParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import {useNavigate} from "react-router-dom";
 import {getEmployeeData, updateEmployee} from "../../../api";
 import EditEmployeeInformation from "./Form/EditEmployeeInformation";
 import Layout from "../../Layout/Layout";
@@ -30,11 +29,16 @@ const EditEmployee = () => {
             const bankAccount = employeeData.bankAccount;
             if (bankAccount)
                 setBankAccountSectionIsHidden(true);
-            else
+            else {
                 setBankAccountSectionIsHidden(false);
+                unregister('bankAccount');
+            }
+
             const contractType = employeeData.employmentDetails.contractType;
             if (contractType === 'CDI' || contractType === 'CDD')
                 setCnssFieldIsHidden(false);
+            else
+                unregister('cnssRegistrationNumber');
         } catch(error) {
             console.log('Error fetching employee data: ', error);
         }
@@ -44,8 +48,10 @@ const EditEmployee = () => {
         fetchEmployee();
     }, [id]);
 
-    const handleSwitcherButton = (switchStatus) => {
-        setBankAccountSectionIsHidden(switchStatus);
+    const handleSwitcherButton = (bankAccountToggleActivated) => {
+        if (!bankAccountToggleActivated)
+            unregister('bankAccount');
+        setBankAccountSectionIsHidden(bankAccountToggleActivated);
     }
 
     const handleCnssField = (e) => {
@@ -91,7 +97,10 @@ const EditEmployee = () => {
     });
 
     const onSubmit = async (employeeData) => {
-        const formData = buildFormatData(employeeData, cnssFieldIsHidden, bankAccountSectionIsHidden);
+        if (cnssFieldIsHidden)
+            unregister('cnssRegistrationNumber');
+        console.log(employeeData);
+        const formData = buildFormatData(employeeData);
         try {
             await updateEmployee(id, formData);
             setServerErrorMessage('');

@@ -1,4 +1,4 @@
-export const buildFormatData = (employeeData, cnssFieldIsHidden, bankAccountSectionIsHidden) => {
+export const buildFormatData = (employeeData) => {
     const formData = new FormData();
     for (const key in employeeData) {
         if (key === 'profileImage') {

@@ -3,10 +3,8 @@ import {useForm, Controller} from "react-hook-form";
 import Layout from "../Layout/Layout";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import {getValue} from "@testing-library/user-event/dist/utils";
 
 const LeaveRequestForm = () => {
     const [serverErrorMessage, setServerErrorMessage] = useState('');
@@ -178,7 +176,7 @@ const LeaveRequestForm = () => {
                                         )}
                                     </div>
                                     <div className={"mt-3"}>
-                                        <button className={"btn btn-dark btn-sm ms-auto"}>Update</button>
+                                        <button className={"btn btn-dark btn-sm ms-auto"}>Submit</button>
                                         {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
                                         {successMessage && <p className="success-message">{successMessage}</p>}
                                     </div>
