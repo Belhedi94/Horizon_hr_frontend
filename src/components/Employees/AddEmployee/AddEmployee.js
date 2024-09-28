@@ -41,7 +41,7 @@ const AddEmployee = () => {
     }
 
     return (
-        <Layout title={"Employees management"}>
+        <Layout title={"Add new employee"}>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                     <div className="col-md-12">

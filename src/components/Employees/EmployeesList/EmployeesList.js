@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import Layout from "../../Layout/Layout";
 
-const Employees = () => {
+const EmployeesList = () => {
     return (
         <Layout title={"Employees list"}>
             <div className={"text-end"}>
@@ -57,7 +57,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">23/04/18</span>
                                         </td>
                                         <td className="align-middle">
-                                            <a href="src/components/Employees/EmployeesList/Employees"
+                                            <a href="src/components/Employees/EmployeesList/EmployeesList.js"
                                                className="text-secondary font-weight-bold text-xs"
                                                data-toggle="tooltip" data-original-title="Edit user">
                                                 Edit
@@ -88,7 +88,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">11/01/19</span>
                                         </td>
                                         <td className="align-middle">
-                                            <a href="src/components/Employees/EmployeesList/Employees"
+                                            <a href="src/components/Employees/EmployeesList/EmployeesList.js"
                                                className="text-secondary font-weight-bold text-xs"
                                                data-toggle="tooltip" data-original-title="Edit user">
                                                 Edit
@@ -120,7 +120,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">19/09/17</span>
                                         </td>
                                         <td className="align-middle">
-                                            <a href="src/components/Employees/EmployeesList/Employees"
+                                            <a href="src/components/Employees/EmployeesList/EmployeesList.js"
                                                className="text-secondary font-weight-bold text-xs"
                                                data-toggle="tooltip" data-original-title="Edit user">
                                                 Edit
@@ -152,7 +152,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">24/12/08</span>
                                         </td>
                                         <td className="align-middle">
-                                            <a href="src/components/Employees/EmployeesList/Employees"
+                                            <a href="src/components/Employees/EmployeesList/EmployeesList.js"
                                                className="text-secondary font-weight-bold text-xs"
                                                data-toggle="tooltip" data-original-title="Edit user">
                                                 Edit
@@ -184,7 +184,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">04/10/21</span>
                                         </td>
                                         <td className="align-middle">
-                                            <a href="src/components/Employees/EmployeesList/Employees"
+                                            <a href="src/components/Employees/EmployeesList/EmployeesList.js"
                                                className="text-secondary font-weight-bold text-xs"
                                                data-toggle="tooltip" data-original-title="Edit user">
                                                 Edit
@@ -216,7 +216,7 @@ const Employees = () => {
                                                     className="text-secondary text-xs font-weight-bold">14/09/20</span>
                                         </td>
                                         <td className="align-middle">
-                                            <a href="src/components/Employees/EmployeesList/Employees"
+                                            <a href="src/components/Employees/EmployeesList/EmployeesList.js"
                                                className="text-secondary font-weight-bold text-xs"
                                                data-toggle="tooltip" data-original-title="Edit user">
                                                 Edit
@@ -234,4 +234,4 @@ const Employees = () => {
     );
 };
 
-export default Employees;
+export default EmployeesList;
