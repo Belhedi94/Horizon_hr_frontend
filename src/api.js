@@ -36,3 +36,22 @@ export const updateEmployee = async (id, employeeData) => {
         throw new Error(error.response ? error.response.message : 'Error updating employee');
     }
 }
+
+export const createLeaveRequest = async (leaveRequestData) => {
+    try {
+        const response = await axios.post(`${API_URL}/requests/leaves`, leaveRequestData);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error creating the leave request');
+    }
+}
+
+export const getAllLeaveRequests = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/requests/leaves`);
+        return response.data;
+    }
+    catch(error) {
+        throw new Error(error.response ? error.response.message : 'Error getting leave requests data');
+    }
+};

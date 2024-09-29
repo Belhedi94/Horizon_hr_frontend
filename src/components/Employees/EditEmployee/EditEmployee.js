@@ -99,7 +99,6 @@ const EditEmployee = () => {
     const onSubmit = async (employeeData) => {
         if (cnssFieldIsHidden)
             unregister('cnssRegistrationNumber');
-        console.log(employeeData);
         const formData = buildFormatData(employeeData);
         try {
             await updateEmployee(id, formData);
