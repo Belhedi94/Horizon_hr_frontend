@@ -1,17 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faCircleCheck, faCircleXmark, faEye, faPen} from "@fortawesome/free-solid-svg-icons";
 import Layout from "../../../Layout/Layout";
-import {getAllLeaveRequests} from "../../../../api";
+import {getAllLeaveRequests, updateLeaveRequest} from "../../../../api";
 
 const LeaveRequestsList = () => {
 
     const [leaveRequests, setLeaveRequests] = useState([]);
 
-    useEffect(() => {
+    useEffect( () => {
         fetchLeaveRequests();
     }, []);
+
+    const changeStatus = async (id, value) => {
+        const data = {
+            status: value
+        };
+
+        await updateLeaveRequest(id, data);
+        fetchLeaveRequests();
+    };
 
     const fetchLeaveRequests = async () => {
         const data = await getAllLeaveRequests();
@@ -64,11 +73,22 @@ const LeaveRequestsList = () => {
                                                 <span className="text-secondary text-xs font-weight-bold">{leaveRequest.createdAt}</span>
                                             </td>
                                             <td className="align-middle text-center text-sm">
-                                                <span className="badge badge-sm bg-gradient-success">{leaveRequest.status}</span>
+                                                <span className={`badge badge-sm ${leaveRequest.status === 'Approved' ? 'bg-gradient-success' :
+                                                    leaveRequest.status === 'Rejected' ? 'bg-gradient-danger' : 'bg-gradient-secondary'
+                                                }`}>{leaveRequest.status}</span>
                                             </td>
                                             <td className="align-middle text-center">
-                                                <FontAwesomeIcon icon={faCircleCheck} title={"Approve"} size={"lg"} style={{marginRight: '5px', color: 'green', cursor: 'pointer'}}/>
-                                                <FontAwesomeIcon icon={faCircleXmark} title={"Reject"} size={"lg"} style={{color: 'red', cursor: 'pointer'}}/>
+                                                <FontAwesomeIcon icon={faEye} title={"View details"} size={"lg"} style={{color: 'purple', marginRight: '5px', cursor: 'pointer'}}/>
+                                                {leaveRequest.status === 'Draft' && (
+                                                    <>
+                                                        <FontAwesomeIcon icon={faCircleCheck} title={"Approve"} onClick={() => changeStatus(leaveRequest.id, "Approved")} size={"lg"} style={{marginRight: '5px', color: 'green', cursor: 'pointer'}}/>
+                                                        <FontAwesomeIcon icon={faCircleXmark} title={"Reject"} onClick={() => changeStatus(leaveRequest.id, "Rejected")} size={"lg"} style={{marginRight: '5px', color: 'red', cursor: 'pointer'}}/>
+                                                        <Link to={`/requests/leaves/edit/${leaveRequest.id}`}>
+                                                            <FontAwesomeIcon icon={faPen} title={"Edit"}   style={{color: 'purple', cursor: 'pointer'}}/>
+                                                        </Link>
+                                                    </>
+                                                )}
+
                                             </td>
                                         </tr>
                                     )))}

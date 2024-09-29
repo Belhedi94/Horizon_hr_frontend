@@ -8,7 +8,8 @@ import AddEmployee from "./components/Employees/AddEmployee/AddEmployee";
 import Departments from "./components/Department/Departments/Departments";
 import EditEmployee from "./components/Employees/EditEmployee/EditEmployee";
 import LeaveRequestForm from "./components/LeaveRequest/Admin/AddLeaveRequest/LeaveRequestForm";
-import LeaveRequestsList from "./components/LeaveRequest/Admin/LeaveRequestsList/LeaverequestsList";
+import LeaveRequestsList from "./components/LeaveRequest/Admin/LeaveRequestsList/LeaveRequestsList";
+import EditLeaveRequest from "./components/LeaveRequest/Admin/EditLeaveRequest/EditLeaveRequest";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/departments" element={<Departments />}/>
             <Route path="/requests/leaves" element={<LeaveRequestsList />}/>
             <Route path="/requests/leaves/add" element={<LeaveRequestForm />}/>
+              <Route path="/requests/leaves/edit/:id" element={<EditLeaveRequest />}/>
           </Routes>
         </Router>
   );

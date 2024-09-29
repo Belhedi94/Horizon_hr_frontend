@@ -55,3 +55,12 @@ export const getAllLeaveRequests = async () => {
         throw new Error(error.response ? error.response.message : 'Error getting leave requests data');
     }
 };
+
+export const updateLeaveRequest = async (id, data) => {
+    try {
+        const response = await axios.put(`${API_URL}/requests/leaves/${id}`, data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error updating leave request');
+    }
+}

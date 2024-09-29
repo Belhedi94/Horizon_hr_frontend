@@ -17,6 +17,7 @@ const LeaveRequestForm = () => {
     // const [startTime, setStartTime] = useState(null);
     // const [endTime, setEndTime] = useState(null);
     const [isHalfDay, setIsHalfDay] = useState(false);
+
     const {register, unregister, handleSubmit, control, formState: {errors}, getValues} = useForm();
     const navigate = useNavigate();
     const handleSwitcherButton = (e) => {
