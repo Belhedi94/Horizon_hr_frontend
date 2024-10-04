@@ -64,3 +64,19 @@ export const updateLeaveRequest = async (id, data) => {
         throw new Error(error.response ? error.response.message : 'Error updating leave request');
     }
 }
+
+export const getAllPositions = async (pageNumber, pageSize, filter) => {
+    try {
+        const response = await axios.get("https://localhost:7292/api/positions", {
+            params: {
+                pageNumber: pageNumber + 1,
+                pageSize: pageSize,
+                filter: filter,
+            },
+        });
+
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch data", error);
+    }
+}
