@@ -1,41 +1,61 @@
 import React from 'react';
+import './pagination.css';
 
-const Pagination = ({pageIndex, pageSize, totalItems, setPageIndex, setPageSize}) => {
+const Pagination = ({pageIndex, pageSize, pageCount, totalPages, endPage, previousPage, setPageSize, gotoPage, canPreviousPage, canNextPage, startPage, nextPage}) => {
     return (
         <div className="center">
             <div className="pagination">
-                    <span onClick={() => setPageIndex(0)} disabled={pageIndex === 0}>
-                        {"<<"}
-                    </span>
-                <span onClick={() => setPageIndex(pageIndex - 1)} disabled={pageIndex === 0}>
-                        {"<"}
-                    </span>
-                {Array.from({ length: Math.ceil(totalItems / pageSize) }, (_, i) => (
-                    <span
-                        key={i}
-                        onClick={() => setPageIndex(i)}
-                        style={{ fontWeight: pageIndex === i ? "bold" : "normal" }}
-                    >
-                            {i + 1}
-                        </span>
-                ))}
-                <span onClick={() => setPageIndex(pageIndex + 1)} disabled={pageIndex + 1 >= Math.ceil(totalItems / pageSize)}>
-                        {">"}
-                    </span>
-                <span onClick={() => setPageIndex(Math.ceil(totalItems / pageSize) - 1)} disabled={pageIndex + 1 >= Math.ceil(totalItems / pageSize)}>
-                        {">>"}
-                    </span>
+                <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                    {"<<"}
+                </button>
+                <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                    {"<"}
+                </button>
 
+                {/* Show the first page and ellipsis if necessary */}
+                {startPage > 0 && (
+                    <>
+                        <button onClick={() => gotoPage(0)}>1</button>
+                        <span>...</span>
+                    </>
+                )}
+
+                {/* Visible page numbers */}
+                {Array.from({ length: endPage - startPage }, (_, i) => startPage + i).map((page) => (
+                    <button
+                        key={page}
+                        onClick={() => gotoPage(page)}
+                        style={{ fontWeight: pageIndex === page ? "bold" : "normal" }}
+                    >
+                        {page + 1}
+                    </button>
+                ))}
+
+                {/* Show the last page and ellipsis if necessary */}
+                {endPage < totalPages && (
+                    <>
+                        <span>...</span>
+                        <button onClick={() => gotoPage(totalPages - 1)}>{totalPages}</button>
+                    </>
+                )}
+
+                <button onClick={() => nextPage()} disabled={!canNextPage}>
+                    {">"}
+                </button>
+                <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                    {">>"}
+                </button>
+
+                {/* Page size selection */}
                 <select
                     value={pageSize}
                     onChange={(e) => {
                         setPageSize(Number(e.target.value));
-                        setPageIndex(0);
                     }}
                 >
-                    {[10, 20, 30, 50].map((pageSize) => (
-                        <option key={pageSize} value={pageSize}>
-                            {pageSize}
+                    {[10, 20, 30, 50].map((size) => (
+                        <option key={size} value={size}>
+                            Show {size}
                         </option>
                     ))}
                 </select>

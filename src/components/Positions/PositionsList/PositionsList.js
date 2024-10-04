@@ -4,8 +4,6 @@ import ConfirmDeleteModal from "../../Modals/ConfirmDeleteModal/ConfirmDeleteMod
 import {getAllPositions} from "../../../api";
 import AddButton from "../../Common/AddButton/AddButton";
 import DataList from "../../Common/DataList/DataList";
-import Pagination from "../../Common/Pagination/Pagination";
-import './positions_list.css';
 
 const PositionsList = () => {
     const [data, setData] = useState([]);
@@ -64,13 +62,11 @@ const PositionsList = () => {
                 loading={loading}
                 handleFilterChange={handleFilterChange}
                 openModal={openModal}
-            />
-            <Pagination
+                setPageSize={setPageSize}
+                setPageIndex={setPageIndex}
                 pageIndex={pageIndex}
                 pageSize={pageSize}
-                totalItems = {totalItems}
-                setPageIndex={setPageIndex}
-                setPageSize={setPageSize}
+                totalItems={totalItems}
             />
         </Layout>
     );

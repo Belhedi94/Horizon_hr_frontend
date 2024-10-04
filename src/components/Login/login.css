@@ -23204,7 +23204,7 @@ html {
 }
 
 .sidenav {
-  z-index: 1030;
+  /*z-index: 1030;*/
 }
 
 .sidenav .navbar-brand,

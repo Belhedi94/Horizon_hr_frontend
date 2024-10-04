@@ -2,9 +2,10 @@ import React, { useMemo } from "react";
 import {usePagination, useTable} from "react-table";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPen, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {faPen, faTrashCan, faBriefcase} from "@fortawesome/free-solid-svg-icons";
+// import Pagination from "../Pagination/Pagination";
 
-const DataList = ({data, loading, filterInput, handleFilterChange, totalItems, pageSize, openModal}) => {
+const DataList = ({data, loading, filterInput, handleFilterChange, openModal, pageIndex}) => {
 
     const columns = useMemo(
         () => [
@@ -14,7 +15,7 @@ const DataList = ({data, loading, filterInput, handleFilterChange, totalItems, p
                 Cell: ({ value }) => (
                     <div className="d-flex px-2 py-1">
                         <div>
-                            <img src={"/images/default_employee_avatar.png"} className="avatar avatar-sm me-3" alt="user_image" />
+                            <FontAwesomeIcon icon={faBriefcase} size={"2x"} style={{marginRight: '10px'}}/>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
                             <h6 className="mb-0 text-sm">{ value}</h6>
@@ -54,84 +55,98 @@ const DataList = ({data, loading, filterInput, handleFilterChange, totalItems, p
         getTableProps,
         getTableBodyProps,
         headerGroups,
-        prepareRow,
         page,
+        prepareRow,
         canPreviousPage,
         canNextPage,
         pageOptions,
+        pageCount,
         gotoPage,
         nextPage,
         previousPage,
-        setPageSize: setPageSizeTable,
-        state: { pageIndex: tablePageIndex, pageSize: tablePageSize },
+        // state: { pageIndex, pageSize },
+        // setPageSize,
     } = useTable(
         {
             columns,
             data,
-            initialState: { pageIndex: 0, pageSize: 10 }, // Set initial page size
-            manualPagination: true, // For server-side pagination
-            pageCount: Math.ceil(totalItems / pageSize), // Calculate page count
+            initialState: { pageIndex: 0 },
         },
         usePagination
     );
 
+    const totalPages = pageCount;
+    const visiblePageCount = 5; // Number of visible pages
+
+    // Calculate the start and end of the visible page range
+    let startPage = Math.max(0, pageIndex - Math.floor(visiblePageCount / 2));
+    let endPage = Math.min(totalPages, startPage + visiblePageCount);
+
+    if (endPage - startPage < visiblePageCount) {
+        startPage = Math.max(0, endPage - visiblePageCount);
+    }
+
+
     return (
-        <div className="row">
-            <div className="col-12">
-                <div className="card mb-4">
-                    <div className="card-header pb-0">
-                        <div className="row d-flex px-2 py-1 align-items-center">
-                            <div className={"col-md"}>
-                                <h6>Positions</h6>
-                            </div>
-                            <div className="col-md-3">
-                                <input
-                                    value={filterInput}
-                                    onChange={handleFilterChange}
-                                    placeholder={"Search..."}
-                                    className="form-control"
-                                />
+        <div>
+            <div className="row">
+                <div className="col-12">
+                    <div className="card mb-4">
+                        <div className="card-header pb-0">
+                            <div className="row d-flex px-2 py-1 align-items-center">
+                                <div className={"col-md"}>
+                                    <h6>Positions</h6>
+                                </div>
+                                <div className="col-md-3">
+                                    <input
+                                        value={filterInput}
+                                        onChange={handleFilterChange}
+                                        placeholder={"Search..."}
+                                        className="form-control"
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="card-body px-0 pt-0 pb-2">
-                        <div className="table-responsive p-0">
-                            <table {...getTableProps()} className="table align-items-center mb-0">
-                                <thead>
-                                {headerGroups.map((headerGroup, index) => (
-                                    <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                                        {headerGroup.headers.map((column) => (
-                                            <th {...column.getHeaderProps()} key={column.id} className={"text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"}>{column.render("Header")}</th>
-                                        ))}
-                                    </tr>
-                                ))}
-                                </thead>
-                                <tbody {...getTableBodyProps()}>
-                                {loading ? (
-                                    <tr>
-                                        <td colSpan={5} className="text-center">
-                                            Loading...
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    page.map((row) => {
-                                        prepareRow(row);
-                                        return (
-                                            <tr {...row.getRowProps()} key={row.id}>
-                                                {row.cells.map((cell) => (
-                                                    <td {...cell.getCellProps()} key={cell.column.id} className={"text-xs font-weight-bold mb-0"}>{cell.render("Cell")}</td>
-                                                ))}
-                                            </tr>
-                                        );
-                                    })
-                                )}
-                                </tbody>
-                            </table>
+                        <div className="card-body px-0 pt-0 pb-2">
+                            <div className="table-responsive p-0">
+                                <table {...getTableProps()} className="table align-items-center mb-0">
+                                    <thead>
+                                    {headerGroups.map((headerGroup, index) => (
+                                        <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                                            {headerGroup.headers.map((column) => (
+                                                <th {...column.getHeaderProps()} key={column.id} className={"text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"}>{column.render("Header")}</th>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                    </thead>
+                                    <tbody {...getTableBodyProps()}>
+                                    {loading ? (
+                                        <tr>
+                                            <td colSpan={5} className="text-center">
+                                                Loading...
+                                            </td>
+                                        </tr>
+                                    ) : (
+                                        page.map((row) => {
+                                            prepareRow(row);
+                                            return (
+                                                <tr {...row.getRowProps()} key={row.id}>
+                                                    {row.cells.map((cell) => (
+                                                        <td {...cell.getCellProps()} key={cell.column.id} className={"text-xs font-weight-bold mb-0"}>{cell.render("Cell")}</td>
+                                                    ))}
+                                                </tr>
+                                            );
+                                        })
+                                    )}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     );
 };
 

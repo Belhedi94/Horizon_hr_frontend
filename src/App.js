@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Routes, } from "react-router-dom";
 import Login from "./components/Login/Login";
@@ -11,7 +11,9 @@ import LeaveRequestForm from "./components/LeaveRequest/Admin/AddLeaveRequest/Le
 import LeaveRequestsList from "./components/LeaveRequest/Admin/LeaveRequestsList/LeaveRequestsList";
 import EditLeaveRequest from "./components/LeaveRequest/Admin/EditLeaveRequest/EditLeaveRequest";
 
-function App() {
+
+const App = () => {
+
   return (
         <Router>
           <Routes>

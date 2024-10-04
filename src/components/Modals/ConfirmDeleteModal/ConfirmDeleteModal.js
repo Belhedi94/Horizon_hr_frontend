@@ -12,7 +12,7 @@ const ConfirmDeleteModal = ({ isOpen, onRequestClose, onConfirmDelete, item }) =
             className="modal-content"
             overlayClassName="modal-overlay"
         >
-            <h4 className="text-center">Are you sure?</h4>
+            <h4 className="text-center mt-4">Are you sure?</h4>
             <p className={"center"}>Are you sure you want to delete this {item}?</p>
             <div className={"text-center m-2"}>
                 <button className={"btn btn-danger"} style={{marginRight: '20px'}} onClick={onConfirmDelete}>Yes, Delete</button>

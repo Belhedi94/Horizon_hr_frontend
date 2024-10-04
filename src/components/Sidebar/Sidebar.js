@@ -11,8 +11,7 @@ const Sidebar = ({
                      leaveRequestsIcon,
                      documentRequest,
                      jobOffersIcon,
-                     dashboardIcon
-}) => {
+                     dashboardIcon}) => {
 
     const {activeNav, setActiveNav} = useSideBar();
 
@@ -54,9 +53,9 @@ const Sidebar = ({
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to={"/departments"} className={`nav-link ${activeNav === 'Positions' ? 'active' : ''}`} onClick={() => handleNavClick('Positions')}>
-                            <div className={`icon ${activeNav === 'Positions' ? 'active' : ''} icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center`} >
-                                <FontAwesomeIcon icon={departmentIcon} color={activeNav === 'Positions' ? 'white' : ''} />
+                        <Link to={"/departments"} className={`nav-link ${activeNav === 'Departments' ? 'active' : ''}`} onClick={() => handleNavClick('Departments')}>
+                            <div className={`icon ${activeNav === 'Departments' ? 'active' : ''} icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center`} >
+                                <FontAwesomeIcon icon={departmentIcon} color={activeNav === 'Departments' ? 'white' : ''} />
                             </div>
                             <span className="nav-link-text ms-1">Departments</span>
                         </Link>
