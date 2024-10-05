@@ -63,6 +63,7 @@ const EditEmployee = () => {
             unregister('cnssRegistrationNumber');
         }
     };
+
     const {register, unregister, handleSubmit, control, formState: {errors}} = useForm({
         values: {
             firstName:  employee.firstName,

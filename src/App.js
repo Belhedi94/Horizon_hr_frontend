@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Routes, } from "react-router-dom";
 import Login from "./components/Login/Login";
@@ -10,6 +10,11 @@ import EditEmployee from "./components/Employees/EditEmployee/EditEmployee";
 import LeaveRequestForm from "./components/LeaveRequest/Admin/AddLeaveRequest/LeaveRequestForm";
 import LeaveRequestsList from "./components/LeaveRequest/Admin/LeaveRequestsList/LeaveRequestsList";
 import EditLeaveRequest from "./components/LeaveRequest/Admin/EditLeaveRequest/EditLeaveRequest";
+import AddPosition from "./components/Positions/AddPosition/AddPosition";
+import EditPosition from "./components/Positions/EditPosition/EditPosition";
+import DepartmentsList from "./components/Departments/DepartmentsList/PositionsList";
+import AddDepartment from "./components/Departments/AddDepartment/AddDepartment";
+import EditDepartment from "./components/Departments/EditDepartment/EditPosition";
 
 
 const App = () => {
@@ -22,7 +27,12 @@ const App = () => {
             <Route path="/employees" element={<EmployeesList />}/>
             <Route path="/employees/add" element={<AddEmployee />}/>
             <Route path="/employees/edit/:id" element={<EditEmployee />}/>
+            <Route path="/departments" element={<DepartmentsList />}/>
+            <Route path="/departments/add" element={<AddDepartment />}/>
+            <Route path="/departments/edit/:id" element={<EditDepartment />}/>
             <Route path="/positions" element={<PositionsList />}/>
+            <Route path="/positions/add" element={<AddPosition />}/>
+            <Route path="/positions/edit/:id" element={<EditPosition />}/>
             <Route path="/requests/leaves" element={<LeaveRequestsList />}/>
             <Route path="/requests/leaves/add" element={<LeaveRequestForm />}/>
             <Route path="/requests/leaves/edit/:id" element={<EditLeaveRequest />}/>

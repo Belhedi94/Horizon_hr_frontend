@@ -7,9 +7,9 @@ import EmployeeInformation from "./Form/EmployeeInformation";
 import AdditionalInformation from "./Form/AdditionalInformation";
 import BankAccountInformation from "./Form/BankAccountInformation";
 import EmploymentInformation from "./Form/EmploymentInformation";
-import "./add_employee.css";
 import Layout from "../../Layout/Layout";
 import {buildFormatData} from "../../utils/formatDataHelper";
+import "./add_employee.css";
 
 const AddEmployee = () => {
     const [cnssFieldIsHidden, setCnssFieldIsHidden] = useState('none');
@@ -26,6 +26,7 @@ const AddEmployee = () => {
             unregister('cnss');
         }
     };
+
     const {register, unregister, handleSubmit, control, formState: {errors}} = useForm();
 
     const onSubmit = async (employeeData) => {
@@ -71,7 +72,6 @@ const AddEmployee = () => {
             </form>
         </Layout>
 
-    );
-};
+    )};
 
 export default AddEmployee;

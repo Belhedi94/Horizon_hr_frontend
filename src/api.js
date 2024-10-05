@@ -81,6 +81,15 @@ export const getAllPositions = async (pageNumber, pageSize, filter) => {
     }
 }
 
+export const createPosition = async (data) => {
+    try {
+        const response = await axios.post(`${API_URL}/positions`, data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error creating position');
+    }
+}
+
 export const deletePosition = async(id) => {
   try {
       const response = await axios.delete(`${API_URL}/positions/${id}`);
@@ -89,3 +98,75 @@ export const deletePosition = async(id) => {
       console.log("Failed to delete a position", error);
   }
 };
+
+export const getPositionData = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/positions/${id}`);
+        return response.data.data;
+    } catch(error) {
+        throw new Error(error.response ? error.response.message : 'Error getting position data');
+    }
+}
+
+export const updatePosition = async (id, positionData) => {
+    try {
+        const response = await axios.put(`${API_URL}/positions/${id}`, positionData);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error updating position');
+    }
+}
+
+//Department api
+
+export const getAllDepartments = async (pageNumber, pageSize, filter) => {
+    try {
+        const response = await axios.get("https://localhost:7292/api/departments", {
+            params: {
+                pageNumber: pageNumber + 1,
+                pageSize: pageSize,
+                filter: filter,
+            },
+        });
+
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch data", error);
+    }
+}
+
+export const createDepartment = async (data) => {
+    try {
+        const response = await axios.post(`${API_URL}/departments`, data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error creating department');
+    }
+}
+
+export const deleteDepartment = async(id) => {
+    try {
+        const response = await axios.delete(`${API_URL}/departments/${id}`);
+        return response.data;
+    }  catch(error) {
+        console.log("Failed to delete a department", error);
+    }
+};
+
+export const getDepartmentData = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/departments/${id}`);
+        return response.data.data;
+    } catch(error) {
+        throw new Error(error.response ? error.response.message : 'Error getting department data');
+    }
+}
+
+export const updateDepartment = async (id, data) => {
+    try {
+        const response = await axios.put(`${API_URL}/departments/${id}`, data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error updating department');
+    }
+}
