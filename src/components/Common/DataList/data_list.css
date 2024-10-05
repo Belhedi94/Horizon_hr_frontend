@@ -1,0 +1,76 @@
+/* Pagination container */
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+/* Individual page numbers */
+.pagination li {
+    margin: 0 5px;
+}
+
+/* Page links */
+.pagination li a {
+    display: block;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for page links */
+.pagination li a:hover {
+    background-color: #344e86;
+    color: #ffffff!important;
+}
+
+/* Active page */
+.pagination li.active a {
+    background-color: #344e86;
+    color: #ffffff;
+    border-color: white;
+}
+
+/* Disabled previous/next buttons */
+.pagination li.pagination-disabled a {
+    background-color: #ffffff;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination li.pagination-disabled a:hover {
+    color: #ccc!important;
+}
+
+/* Break (ellipsis) */
+.pagination li.pagination-break {
+    /*padding: 8px 12px;*/
+}
+
+/* Previous/Next buttons */
+.pagination-previous a,
+.pagination-next a {
+    padding: 8px 16px;
+    background-color: #344767;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.pagination-previous a:hover,
+.pagination-next a:hover {
+    background-color: #0056b3;
+}
+
+/* Disabled previous/next buttons */
+.pagination-previous.pagination-disabled a,
+.pagination-next.pagination-disabled a {
+    background-color: #e9ecef;
+    color: #ccc;
+    cursor: not-allowed;
+}

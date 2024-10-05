@@ -80,3 +80,12 @@ export const getAllPositions = async (pageNumber, pageSize, filter) => {
         console.error("Failed to fetch data", error);
     }
 }
+
+export const deletePosition = async(id) => {
+  try {
+      const response = await axios.delete(`${API_URL}/positions/${id}`);
+      return response.data;
+  }  catch(error) {
+      console.log("Failed to delete a position", error);
+  }
+};

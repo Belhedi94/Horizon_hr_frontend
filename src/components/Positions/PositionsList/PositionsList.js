@@ -4,6 +4,7 @@ import ConfirmDeleteModal from "../../Modals/ConfirmDeleteModal/ConfirmDeleteMod
 import {getAllPositions} from "../../../api";
 import AddButton from "../../Common/AddButton/AddButton";
 import DataList from "../../Common/DataList/DataList";
+import {deletePosition} from "../../../api";
 
 const PositionsList = () => {
     const [data, setData] = useState([]);
@@ -13,6 +14,7 @@ const PositionsList = () => {
     const [totalItems, setTotalItems] = useState(0);
     const [filterInput, setFilterInput] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedPosition, setSelectedPosition] = useState(null);
 
     const handleFilterChange = (e) => {
         const value = e.target.value || "";
@@ -20,7 +22,8 @@ const PositionsList = () => {
         setPageIndex(0);
     };
 
-    const openModal = () => {
+    const openModal = (value) => {
+        setSelectedPosition(value);
         setIsModalOpen(true);
     };
 
@@ -28,8 +31,11 @@ const PositionsList = () => {
         setIsModalOpen(false);
     };
 
-    const handleDelete = () => {
-        closeModal();
+    const handleDelete = async () => {
+        const response = await deletePosition(selectedPosition);
+        if (response.status === 201)
+            closeModal();
+        await fetchData();
     };
 
     const fetchData = async () => {
@@ -48,6 +54,10 @@ const PositionsList = () => {
         fetchData();
     }, [pageIndex, pageSize, filterInput]);
 
+    const dataListProps = {
+        data, loading, handleFilterChange, openModal, setPageSize, setPageIndex, pageIndex, pageSize, totalItems
+    };
+
     return (
         <Layout title={"Positions management"}>
             <ConfirmDeleteModal
@@ -57,17 +67,7 @@ const PositionsList = () => {
                 item={"position"}
             />
             <AddButton link={"/positions/add"} buttonName={"Add position"}/>
-            <DataList
-                data={data}
-                loading={loading}
-                handleFilterChange={handleFilterChange}
-                openModal={openModal}
-                setPageSize={setPageSize}
-                setPageIndex={setPageIndex}
-                pageIndex={pageIndex}
-                pageSize={pageSize}
-                totalItems={totalItems}
-            />
+            <DataList props={dataListProps}/>
         </Layout>
     );
 };

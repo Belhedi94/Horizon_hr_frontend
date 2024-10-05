@@ -3,9 +3,13 @@ import {usePagination, useTable} from "react-table";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faTrashCan, faBriefcase} from "@fortawesome/free-solid-svg-icons";
-// import Pagination from "../Pagination/Pagination";
+import SearchBox from "../SearchBox/SearchBox";
+import Table from "../Table/Table";
+import ReactPaginate from "react-paginate";
+import './data_list.css';
 
-const DataList = ({data, loading, filterInput, handleFilterChange, openModal, pageIndex}) => {
+const DataList = ({props}) => {
+    const {data, loading, filterInput, handleFilterChange, openModal, setPageIndex, pageSize, totalItems} = props;
 
     const columns = useMemo(
         () => [
@@ -32,11 +36,11 @@ const DataList = ({data, loading, filterInput, handleFilterChange, openModal, pa
                 accessor: "action",
                 Cell: ({ row }) => (
                     <div>
-                        <Link to={`/requests/leaves/edit/${row.original.id}`}>
+                        <Link to={`/positions/edit/${row.original.id}`}>
                             <FontAwesomeIcon icon={faPen} title={"Edit"}   style={{color: 'purple', cursor: 'pointer', marginRight: '5px'}}/>
                             <span className={"ml-2"}>Edit</span>
                         </Link>
-                        <span className={"cursor-pointer"} onClick={openModal}>
+                        <span className={"cursor-pointer"} onClick={(e) => openModal(row.original.id)}>
                             <FontAwesomeIcon
                                 icon={faTrashCan}
                                 title={"Delete position"}
@@ -57,35 +61,38 @@ const DataList = ({data, loading, filterInput, handleFilterChange, openModal, pa
         headerGroups,
         page,
         prepareRow,
-        canPreviousPage,
-        canNextPage,
-        pageOptions,
         pageCount,
         gotoPage,
-        nextPage,
-        previousPage,
-        // state: { pageIndex, pageSize },
-        // setPageSize,
     } = useTable(
         {
             columns,
             data,
             initialState: { pageIndex: 0 },
+            manualPagination: true,
+            pageCount: Math.ceil(totalItems / pageSize)
         },
         usePagination
     );
 
-    const totalPages = pageCount;
-    const visiblePageCount = 5; // Number of visible pages
+    const tableProps = {
+        getTableProps,
+        headerGroups,
+        getTableBodyProps,
+        loading,
+        prepareRow,
+        page
+    };
 
-    // Calculate the start and end of the visible page range
-    let startPage = Math.max(0, pageIndex - Math.floor(visiblePageCount / 2));
-    let endPage = Math.min(totalPages, startPage + visiblePageCount);
+    const handlePageClick = (e) => {
+        const selectedPage = e.selected;
+        setPageIndex(selectedPage);
+        gotoPage(selectedPage);
 
-    if (endPage - startPage < visiblePageCount) {
-        startPage = Math.max(0, endPage - visiblePageCount);
-    }
-
+        window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    };
 
     return (
         <div>
@@ -97,54 +104,36 @@ const DataList = ({data, loading, filterInput, handleFilterChange, openModal, pa
                                 <div className={"col-md"}>
                                     <h6>Positions</h6>
                                 </div>
-                                <div className="col-md-3">
-                                    <input
-                                        value={filterInput}
-                                        onChange={handleFilterChange}
-                                        placeholder={"Search..."}
-                                        className="form-control"
-                                    />
-                                </div>
+                                <SearchBox
+                                    filterInput={filterInput}
+                                    handleFilterChange={handleFilterChange}
+                                />
                             </div>
                         </div>
                         <div className="card-body px-0 pt-0 pb-2">
                             <div className="table-responsive p-0">
-                                <table {...getTableProps()} className="table align-items-center mb-0">
-                                    <thead>
-                                    {headerGroups.map((headerGroup, index) => (
-                                        <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                                            {headerGroup.headers.map((column) => (
-                                                <th {...column.getHeaderProps()} key={column.id} className={"text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"}>{column.render("Header")}</th>
-                                            ))}
-                                        </tr>
-                                    ))}
-                                    </thead>
-                                    <tbody {...getTableBodyProps()}>
-                                    {loading ? (
-                                        <tr>
-                                            <td colSpan={5} className="text-center">
-                                                Loading...
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        page.map((row) => {
-                                            prepareRow(row);
-                                            return (
-                                                <tr {...row.getRowProps()} key={row.id}>
-                                                    {row.cells.map((cell) => (
-                                                        <td {...cell.getCellProps()} key={cell.column.id} className={"text-xs font-weight-bold mb-0"}>{cell.render("Cell")}</td>
-                                                    ))}
-                                                </tr>
-                                            );
-                                        })
-                                    )}
-                                    </tbody>
-                                </table>
+                                <Table props={tableProps} />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination"}
+                    activeClassName={"active"}
+                    previousClassName={"pagination-previous"}
+                    nextClassName={"pagination-next"}
+                    disabledClassName={"pagination-disabled"}
+                    breakClassName={"pagination-break"}
+                    hrefBuilder={() => null}
+                />
         </div>
 
     );
