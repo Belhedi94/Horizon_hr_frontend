@@ -170,3 +170,12 @@ export const updateDepartment = async (id, data) => {
         throw new Error(error.response ? error.response.message : 'Error updating department');
     }
 }
+
+export const createTeam = async (data) => {
+    try {
+        const response = await axios.post(`${API_URL}/teams`, data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error creating team');
+    }
+}

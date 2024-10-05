@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {getDepartmentData, updateDepartment} from "../../../api";
-import SimpleForm from "../../Common/SimpleForm/SimpleForm";
 import Layout from "../../Layout/Layout";
+import AddDepartmentForm from "../AddDepartmentForm/AddDepartmentForm";
 
 
 const EditDepartment = () => {
@@ -31,7 +31,7 @@ const EditDepartment = () => {
 
     const {register, handleSubmit, formState: {errors}} = useForm({
         values: {
-            title:  department.title,
+            name:  department.name,
             description: department.description,
         }
     });
@@ -54,7 +54,7 @@ const EditDepartment = () => {
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-body">
-                                <SimpleForm register={register} errors={errors}/>
+                                <AddDepartmentForm register={register} errors={errors}/>
                                 <button className={"btn btn-dark btn-sm ms-auto"}>Save</button>
                                 {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
                                 {successMessage && <p className="success-message">{successMessage}</p>}

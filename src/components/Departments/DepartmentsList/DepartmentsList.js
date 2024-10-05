@@ -3,8 +3,8 @@ import Layout from "../../Layout/Layout";
 import ConfirmDeleteModal from "../../Modals/ConfirmDeleteModal/ConfirmDeleteModal";
 import {getAllDepartments} from "../../../api";
 import AddButton from "../../Common/AddButton/AddButton";
-import DataList from "../../Common/DataList/DataList";
 import {deleteDepartment} from "../../../api";
+import DepartmentsDataList from "../DepartmentsDataList/DepartmentsDataList";
 
 const DepartmentsList = () => {
     const [data, setData] = useState([]);
@@ -59,7 +59,7 @@ const DepartmentsList = () => {
     };
 
     return (
-        <Layout title={"Positions management"}>
+        <Layout title={"Departments management"}>
             <ConfirmDeleteModal
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
@@ -67,7 +67,7 @@ const DepartmentsList = () => {
                 item={"position"}
             />
             <AddButton link={"/departments/add"} buttonName={"Add department"}/>
-            <DataList props={dataListProps}/>
+            <DepartmentsDataList props={dataListProps}/>
         </Layout>
     );
 };
