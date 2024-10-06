@@ -18,11 +18,13 @@ import EditDepartment from "./components/Departments/EditDepartment/EditDepartme
 import AddTeam from "./components/Teams/AddTeam/AddTeam";
 import TeamsList from "./components/Teams/TeamsList/TeamsList";
 import EditTeam from "./components/Teams/EditTeam/EditTeam";
+import {UserProvider} from "./contexts/UserContext";
 
 
 const App = () => {
 
   return (
+      <UserProvider>
         <Router>
           <Routes>
             <Route path="/" element={<Login />}/>
@@ -44,6 +46,8 @@ const App = () => {
             <Route path="/requests/leaves/edit/:id" element={<EditLeaveRequest />}/>
           </Routes>
         </Router>
+      </UserProvider>
+
   );
 }
 

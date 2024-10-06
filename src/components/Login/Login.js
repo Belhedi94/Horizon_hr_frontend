@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, {useContext, useState} from 'react';
 import { useNavigate } from "react-router-dom";
+import {UserContext} from "../../contexts/UserContext";
+import axios from 'axios';
 import "./login.css";
 
 const Login = () => {
+    const {loginUser} = useContext(UserContext);
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -39,9 +41,7 @@ const Login = () => {
             if (response.status === 200)
             {
                 const result = response.data;
-                localStorage.setItem('refreshToken', result.data.refreshToken);
-                localStorage.setItem('expiration', result.data.expiration);
-                localStorage.setItem('user', result.data.user);
+                loginUser(result.data);
                 navigate('/dashboard');
 
             }

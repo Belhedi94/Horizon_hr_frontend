@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useForm, Controller} from "react-hook-form";
 import Layout from "../../../Layout/Layout";
 import DatePicker from 'react-datepicker';
@@ -9,8 +9,10 @@ import {createLeaveRequest, getLeaveBalanceData} from "../../../../api";
 import {useNavigate} from "react-router-dom";
 import {faPersonWalkingLuggage, faHouseMedical} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {UserContext} from "../../../../contexts/UserContext";
 
 const LeaveRequestForm = () => {
+    const {user} = useContext(UserContext);
     const [serverErrorMessage, setServerErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     // const [leaveDurationRadio, setLeaveDurationOptionRadio] = useState('full-day');
@@ -69,7 +71,7 @@ const LeaveRequestForm = () => {
     };
 
     useEffect(() => {
-        fetchLeaveBalance('EABD8853-53E3-440F-88FD-AF7E121B61EB');
+        fetchLeaveBalance(user.id);
     }, []);
 
     return (
