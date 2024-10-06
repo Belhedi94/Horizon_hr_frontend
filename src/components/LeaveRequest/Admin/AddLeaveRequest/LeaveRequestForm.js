@@ -71,8 +71,10 @@ const LeaveRequestForm = () => {
     };
 
     useEffect(() => {
-        fetchLeaveBalance(user.id);
-    }, []);
+        if (user) {
+            fetchLeaveBalance(user.id);
+        }
+    }, [user]);
 
     return (
         <div>
