@@ -16,6 +16,8 @@ import DepartmentsList from "./components/Departments/DepartmentsList/Department
 import AddDepartment from "./components/Departments/AddDepartment/AddDepartment";
 import EditDepartment from "./components/Departments/EditDepartment/EditDepartment";
 import AddTeam from "./components/Teams/AddTeam/AddTeam";
+import TeamsList from "./components/Teams/TeamsList/TeamsList";
+import EditTeam from "./components/Teams/EditTeam/EditTeam";
 
 
 const App = () => {
@@ -34,7 +36,9 @@ const App = () => {
             <Route path="/positions" element={<PositionsList />}/>
             <Route path="/positions/add" element={<AddPosition />}/>
             <Route path="/positions/edit/:id" element={<EditPosition />}/>
+            <Route path="/teams" element={<TeamsList />}/>
             <Route path="/teams/add" element={<AddTeam />}/>
+            <Route path="/teams/edit/:id" element={<EditTeam />}/>
             <Route path="/requests/leaves" element={<LeaveRequestsList />}/>
             <Route path="/requests/leaves/add" element={<LeaveRequestForm />}/>
             <Route path="/requests/leaves/edit/:id" element={<EditLeaveRequest />}/>

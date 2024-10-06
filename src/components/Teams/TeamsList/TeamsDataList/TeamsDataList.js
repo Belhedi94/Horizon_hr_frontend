@@ -2,12 +2,12 @@ import React, { useMemo } from "react";
 import {usePagination, useTable} from "react-table";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPen, faTrashCan, faBuilding} from "@fortawesome/free-solid-svg-icons";
-import SearchBox from "../../Common/SearchBox/SearchBox";
-import Table from "../../Common/Table/Table";
+import {faPen, faTrashCan, faPeopleGroup} from "@fortawesome/free-solid-svg-icons";
+import SearchBox from "../../../Common/SearchBox/SearchBox";
+import Table from "../../../Common/Table/Table";
 import ReactPaginate from "react-paginate";
 
-const DepartmentsDataList = ({props}) => {
+const TeamsDataList = ({props}) => {
     const {data, loading, filterInput, handleFilterChange, openModal, setPageIndex, pageSize, totalItems} = props;
 
     const columns = useMemo(
@@ -18,7 +18,7 @@ const DepartmentsDataList = ({props}) => {
                 Cell: ({ value }) => (
                     <div className="d-flex px-2 py-1">
                         <div>
-                            <FontAwesomeIcon icon={faBuilding} size={"2x"} style={{marginRight: '10px'}}/>
+                            <FontAwesomeIcon icon={faPeopleGroup} size={"2x"} style={{marginRight: '10px'}}/>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
                             <h6 className="mb-0 text-sm">{ value}</h6>
@@ -35,7 +35,7 @@ const DepartmentsDataList = ({props}) => {
                 accessor: "action",
                 Cell: ({ row }) => (
                     <div>
-                        <Link to={`/departments/edit/${row.original.id}`}>
+                        <Link to={`/teams/edit/${row.original.id}`}>
                             <FontAwesomeIcon icon={faPen} title={"Edit"}   style={{color: 'purple', cursor: 'pointer', marginRight: '5px'}}/>
                             <span className={"ml-2"}>Edit</span>
                         </Link>
@@ -101,7 +101,7 @@ const DepartmentsDataList = ({props}) => {
                         <div className="card-header pb-0">
                             <div className="row d-flex px-2 py-1 align-items-center">
                                 <div className={"col-md"}>
-                                    <h6>Departments</h6>
+                                    <h6>Teams</h6>
                                 </div>
                                 <SearchBox
                                     filterInput={filterInput}
@@ -138,4 +138,4 @@ const DepartmentsDataList = ({props}) => {
     );
 };
 
-export default DepartmentsDataList;
+export default TeamsDataList;

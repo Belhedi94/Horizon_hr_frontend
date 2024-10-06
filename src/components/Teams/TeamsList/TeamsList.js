@@ -1,12 +1,13 @@
 import React, { useEffect,  useState } from "react";
 import Layout from "../../Layout/Layout";
 import ConfirmDeleteModal from "../../Modals/ConfirmDeleteModal/ConfirmDeleteModal";
-import {getAllPositions} from "../../../api";
+import {getAllTeams} from "../../../api";
 import AddButton from "../../Common/AddButton/AddButton";
-import DataList from "../../Common/DataList/DataList";
-import {deletePosition} from "../../../api";
+import {deleteTeam} from "../../../api";
+import DepartmentsDataList from "../../Departments/DepartmentsDataList/DepartmentsDataList";
+import TeamsDataList from "./TeamsDataList/TeamsDataList";
 
-const PositionsList = () => {
+const TeamsList = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [pageIndex, setPageIndex] = useState(0);
@@ -14,7 +15,7 @@ const PositionsList = () => {
     const [totalItems, setTotalItems] = useState(0);
     const [filterInput, setFilterInput] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedPosition, setSelectedPosition] = useState(null);
+    const [selectedTeam, setSelectedTeam] = useState(null);
 
     const handleFilterChange = (e) => {
         const value = e.target.value || "";
@@ -23,7 +24,7 @@ const PositionsList = () => {
     };
 
     const openModal = (value) => {
-        setSelectedPosition(value);
+        setSelectedTeam(value);
         setIsModalOpen(true);
     };
 
@@ -32,16 +33,16 @@ const PositionsList = () => {
     };
 
     const handleDelete = async () => {
-        const response = await deletePosition(selectedPosition);
-        if (response.status === 200)
-            closeModal();
+        const response = await deleteTeam(selectedTeam);
+        // if (response.status === 200)
+        closeModal();
         await fetchData();
     };
 
     const fetchData = async () => {
         setLoading(true);
         try {
-            const data = await getAllPositions(pageIndex, pageSize, filterInput);
+            const data = await getAllTeams(pageIndex, pageSize, filterInput);
             setData(data.items);
             setTotalItems(data.totalItems);
             setLoading(false);
@@ -59,17 +60,17 @@ const PositionsList = () => {
     };
 
     return (
-        <Layout title={"Positions management"}>
+        <Layout title={"Teams management"}>
             <ConfirmDeleteModal
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
                 onConfirmDelete={handleDelete}
-                item={"position"}
+                item={"team"}
             />
-            <AddButton link={"/positions/add"} buttonName={"Add position"}/>
-            <DataList props={dataListProps}/>
+            <AddButton link={"/teams/add"} buttonName={"Add team"}/>
+            <TeamsDataList props={dataListProps}/>
         </Layout>
     );
 };
 
-export default PositionsList;
+export default TeamsList;

@@ -119,13 +119,14 @@ export const updatePosition = async (id, positionData) => {
 
 //Department api
 
-export const getAllDepartments = async (pageNumber, pageSize, filter) => {
+export const getAllDepartments = async (pageNumber, pageSize, filter, usePagination) => {
     try {
         const response = await axios.get("https://localhost:7292/api/departments", {
             params: {
                 pageNumber: pageNumber + 1,
                 pageSize: pageSize,
                 filter: filter,
+                usePagination: usePagination
             },
         });
 
@@ -171,6 +172,24 @@ export const updateDepartment = async (id, data) => {
     }
 }
 
+//Team api endpoints
+
+export const getAllTeams = async (pageNumber, pageSize, filter) => {
+    try {
+        const response = await axios.get("https://localhost:7292/api/teams", {
+            params: {
+                pageNumber: pageNumber + 1,
+                pageSize: pageSize,
+                filter: filter
+            },
+        });
+
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch data", error);
+    }
+}
+
 export const createTeam = async (data) => {
     try {
         const response = await axios.post(`${API_URL}/teams`, data);
@@ -179,3 +198,46 @@ export const createTeam = async (data) => {
         throw new Error(error.response ? error.response.message : 'Error creating team');
     }
 }
+
+export const getTeamData = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/teams/${id}`);
+
+        return response.data.data;
+
+    } catch(error) {
+        throw new Error(error.response ? error.response.message : 'Error getting team data');
+    }
+}
+
+export const updateTeam = async (id, data) => {
+    try {
+        const response = await axios.put(`${API_URL}/teams/${id}`, data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error updating team');
+    }
+}
+
+export const deleteTeam = async(id) => {
+    try {
+        const response = await axios.delete(`${API_URL}/teams/${id}`);
+        return response.data;
+    }  catch(error) {
+        console.log("Failed to delete a team", error);
+    }
+};
+
+//Leave balance
+
+export const getLeaveBalanceData = async (userId) => {
+    try {
+        const response = await axios.get(`${API_URL}/leaves/balances/${userId}`);
+
+        return response.data.data;
+
+    } catch(error) {
+        throw new Error(error.response ? error.response.message : 'Error getting leave balance data');
+    }
+}
+

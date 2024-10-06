@@ -25,8 +25,11 @@ const AddTeam = () => {
     }
 
     const fetchDepartments = async () => {
-        const departments = await getAllDepartments();
-        setDepartments(departments);
+        const pageNumber = 1;
+        const pageSize = 10;
+        const filter = '';
+        const departments = await getAllDepartments(pageNumber, pageSize, filter, false);
+        setDepartments(departments.items);
     };
 
     useEffect( () => {

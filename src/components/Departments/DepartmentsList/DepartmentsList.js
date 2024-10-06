@@ -33,7 +33,7 @@ const DepartmentsList = () => {
 
     const handleDelete = async () => {
         const response = await deleteDepartment(selectedDepartment);
-        if (response.status === 201)
+        if (response.status === 200)
             closeModal();
         await fetchData();
     };
@@ -64,7 +64,7 @@ const DepartmentsList = () => {
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
                 onConfirmDelete={handleDelete}
-                item={"position"}
+                item={"department"}
             />
             <AddButton link={"/departments/add"} buttonName={"Add department"}/>
             <DepartmentsDataList props={dataListProps}/>

@@ -34,18 +34,19 @@ const AddTeamForm = ({register, errors, departments}) => {
                     <div className="form-group">
                         <label htmlFor={"department"}>Department<span className={"red-star"}>*</span></label>
                         <select
-                            id="department"
-                            className={`form-control ${errors.contractType ? 'is-invalid' : ''}`}
-                            {...register('department', {
+                            id="departmentId"
+                            className={`form-control ${errors.departmentId ? 'is-invalid' : ''}`}
+                            {...register('departmentId', {
                                 required: 'Department is required',
                                 validate: (value) => value !== "" || 'Please select a department'
                             })}
                         >
+                            <option value="">Select a department</option>
                             {departments.map(department => (
-                                <option value={department.Id}>{department.Name}</option>
+                                <option key={department.id} value={department.id}>{department.name}</option>
                             ))}
                         </select>
-                        {errors.department && <span style={{ color: 'red', fontSize: '12px' }}>{errors.department.message}</span>}
+                        {errors.departmentId && <span style={{ color: 'red', fontSize: '12px' }}>{errors.departmentId.message}</span>}
                     </div>
                 </div>
             </div>

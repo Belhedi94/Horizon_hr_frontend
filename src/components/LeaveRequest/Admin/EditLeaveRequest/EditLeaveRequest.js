@@ -73,6 +73,7 @@ const EditLeaveRequest = () => {
                                                 <option value="">Select a leave type</option>
                                                 <option value="Annual">Annual leave</option>
                                                 <option value="Sick">Sick leave</option>
+                                                <option value="Exceptional">Exceptional leave</option>
                                             </select>
                                             {errors.type && <span style={{ color: 'red', fontSize: '12px' }}>{errors.type.message}</span>}
                                         </div>

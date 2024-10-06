@@ -1,12 +1,14 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useForm, Controller} from "react-hook-form";
 import Layout from "../../../Layout/Layout";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import {createLeaveRequest} from "../../../../api";
+import {createLeaveRequest, getLeaveBalanceData} from "../../../../api";
 import {useNavigate} from "react-router-dom";
+import {faPersonWalkingLuggage, faHouseMedical} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const LeaveRequestForm = () => {
     const [serverErrorMessage, setServerErrorMessage] = useState('');
@@ -17,6 +19,7 @@ const LeaveRequestForm = () => {
     // const [startTime, setStartTime] = useState(null);
     // const [endTime, setEndTime] = useState(null);
     const [isHalfDay, setIsHalfDay] = useState(false);
+    const [leaveBalance, setLeaveBalance] = useState({});
 
     const {register, unregister, handleSubmit, control, formState: {errors}, getValues} = useForm();
     const navigate = useNavigate();
@@ -60,17 +63,26 @@ const LeaveRequestForm = () => {
 
     };
 
+    const fetchLeaveBalance = async (userId) => {
+        const data =  await getLeaveBalanceData(userId);
+        setLeaveBalance(data);
+    };
+
+    useEffect(() => {
+        fetchLeaveBalance('EABD8853-53E3-440F-88FD-AF7E121B61EB');
+    }, []);
+
     return (
         <div>
             <Layout title={"Submit leave request"}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-8">
                             <div className="card">
                                 <div className="card-body">
                                     <p className="text-uppercase text-sm">Leave request details</p>
                                     <div className="row">
-                                        <div className="col-md-6">
+                                        <div className="col-md-8">
                                             <div className="form-group">
                                                 <label htmlFor={"type"}>Leave type <span className={"red-star"}>*</span></label>
                                                 <select
@@ -84,13 +96,14 @@ const LeaveRequestForm = () => {
                                                     <option value="">Select a leave type</option>
                                                     <option value="Annual">Annual leave</option>
                                                     <option value="Sick">Sick leave</option>
+                                                    <option value="Exceptional">Exceptional leave</option>
                                                 </select>
                                                 {errors.type && <span style={{ color: 'red', fontSize: '12px' }}>{errors.type.message}</span>}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-md-6">
+                                        <div className="col-md-8">
                                             <div className="form-group">
                                                 <label htmlFor={"reason"}>Reason <span className={"red-star"}>*</span></label>
                                                 <textarea
@@ -211,6 +224,44 @@ const LeaveRequestForm = () => {
                                         <button className={"btn btn-dark btn-sm ms-auto"}>Submit</button>
                                         {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
                                         {successMessage && <p className="success-message">{successMessage}</p>}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={"col-md-4"}>
+                            <div className="card">
+                                <div className="card-body">
+                                    <div className="row mb-5">
+                                        <div className="col-md-6">
+                                            <div className="card">
+                                                <div className="card-header mx-4 p-3 text-center">
+                                                    <div className="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                                                        <FontAwesomeIcon icon={faPersonWalkingLuggage} size={"2x"} style={{color: '#ffffff', padding: '12px'}}/>
+                                                    </div>
+                                                </div>
+                                                <div className="card-body pt-0 p-3 text-center">
+                                                    <h6 className="text-center mb-0">Annual</h6>
+                                                    <span className="text-xs">Remaining balance</span>
+                                                    <hr className="horizontal dark my-3" />
+                                                    <h5 className="mb-0">{leaveBalance.annual}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="card">
+                                                <div className="card-header mx-4 p-3 text-center">
+                                                    <div className="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                                                        <FontAwesomeIcon icon={faHouseMedical} size={"xl"} style={{color: '#ffffff', padding: '18px'}}/>
+                                                    </div>
+                                                </div>
+                                                <div className="card-body pt-0 p-3 text-center">
+                                                    <h6 className="text-center mb-0">Sick</h6>
+                                                    <span className="text-xs">Remaining balance</span>
+                                                    <hr className="horizontal dark my-3" />
+                                                    <h5 className="mb-0">{leaveBalance.sick}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
