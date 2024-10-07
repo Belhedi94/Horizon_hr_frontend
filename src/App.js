@@ -19,6 +19,8 @@ import AddTeam from "./components/Teams/AddTeam/AddTeam";
 import TeamsList from "./components/Teams/TeamsList/TeamsList";
 import EditTeam from "./components/Teams/EditTeam/EditTeam";
 import {UserProvider} from "./contexts/UserContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const App = () => {
@@ -46,6 +48,11 @@ const App = () => {
             <Route path="/requests/leaves/edit/:id" element={<EditLeaveRequest />}/>
           </Routes>
         </Router>
+        <ToastContainer
+            autoClose={2000}
+            theme="colored"
+            hideProgressBar={true}
+        />
       </UserProvider>
 
   );

@@ -2,15 +2,18 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {getPositionData, updatePosition} from "../../../api";
-import SimpleForm from "../../Common/SimpleForm/SimpleForm";
+import AddPositionForm from "../AddPosition/AddPositionForm/AddPositionForm";
 import Layout from "../../Layout/Layout";
+import {toast} from "react-toastify";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 
 const EditPosition = () => {
     const {id} = useParams();
     const [position, setPosition] = useState({});
-    const [serverErrorMessage, setServerErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [saveButton, setSaveButton] = useState('Save');
     const navigate = useNavigate();
 
     const fetchPosition = async () => {
@@ -39,11 +42,19 @@ const EditPosition = () => {
     const onSubmit = async (positionData) => {
         try {
             await updatePosition(id, positionData);
-            setServerErrorMessage('');
-            setSuccessMessage("Position updated successfully.");
+            setLoading(true);
+            setSaveButton(
+                <>
+                    <FontAwesomeIcon icon={faSpinner} spin size={"xl"} style={{marginRight: '10px'}}/>
+                    Loading...
+                </>
+            );
+            toast.success('Position updated successfully.');
             setTimeout(() => navigate('/positions'), 2000);
         } catch (error) {
-            setServerErrorMessage('Failed to update the position data');
+            setLoading(false);
+            setSaveButton('Save');
+            toast.error('Failed to update the position data');
         }
     }
 
@@ -54,10 +65,8 @@ const EditPosition = () => {
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-body">
-                                <SimpleForm register={register} errors={errors}/>
-                                <button className={"btn btn-dark btn-sm ms-auto"}>Save</button>
-                                {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
-                                {successMessage && <p className="success-message">{successMessage}</p>}
+                                <AddPositionForm register={register} errors={errors}/>
+                                <button disabled={loading} className={"btn btn-dark btn-sm ms-auto"}>{saveButton}</button>
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,13 @@
 import React from "react";
-
-const SimpleForm = ({register, errors}) => {
+import {faCircleLeft} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Link} from "react-router-dom";
+const AddPositionForm = ({register, errors}) => {
     return (
         <div>
+            <Link to={"/positions"}>
+                <FontAwesomeIcon icon={faCircleLeft} size={"2x"} style={{marginBottom: '10px', cursor: 'pointer'}}/>
+            </Link>
             <p className="text-uppercase text-sm">Position Information</p>
             <div className="row">
                 <div className="col-md-6">
@@ -33,4 +38,4 @@ const SimpleForm = ({register, errors}) => {
     );
 };
 
-export default SimpleForm;
+export default AddPositionForm;

@@ -3,8 +3,9 @@ import Layout from "../../Layout/Layout";
 import ConfirmDeleteModal from "../../Modals/ConfirmDeleteModal/ConfirmDeleteModal";
 import {getAllPositions} from "../../../api";
 import AddButton from "../../Common/AddButton/AddButton";
-import DataList from "../../Common/DataList/DataList";
+import PositionsDataList from "./PositionsDataList/PositionsDataList";
 import {deletePosition} from "../../../api";
+import { toast } from 'react-toastify';
 
 const PositionsList = () => {
     const [data, setData] = useState([]);
@@ -33,9 +34,14 @@ const PositionsList = () => {
 
     const handleDelete = async () => {
         const response = await deletePosition(selectedPosition);
-        if (response.status === 200)
+        if (response.status === 200) {
             closeModal();
-        await fetchData();
+            toast.success("Position deleted successfully!");
+            await fetchData();
+        }
+        else
+            toast.error("Failed to delete the position.");
+
     };
 
     const fetchData = async () => {
@@ -67,7 +73,7 @@ const PositionsList = () => {
                 item={"position"}
             />
             <AddButton link={"/positions/add"} buttonName={"Add position"}/>
-            <DataList props={dataListProps}/>
+            <PositionsDataList props={dataListProps}/>
         </Layout>
     );
 };

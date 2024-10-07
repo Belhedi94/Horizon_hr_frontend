@@ -2,13 +2,14 @@ import React, { useMemo } from "react";
 import {usePagination, useTable} from "react-table";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPen, faTrashCan, faBriefcase} from "@fortawesome/free-solid-svg-icons";
-import SearchBox from "../SearchBox/SearchBox";
-import Table from "../Table/Table";
+import {faPenClip, faTrashCan, faBriefcase, faListUl} from "@fortawesome/free-solid-svg-icons";
+import SearchBox from "../../../Common/SearchBox/SearchBox";
+import Table from "../../../Common/Table/Table";
 import ReactPaginate from "react-paginate";
-import './data_list.css';
+import { Tooltip } from "react-tooltip";
+import './positions_data_list.css';
 
-const DataList = ({props}) => {
+const PositionsDataList = ({props}) => {
     const {data, loading, filterInput, handleFilterChange, openModal, setPageIndex, pageSize, totalItems} = props;
 
     const columns = useMemo(
@@ -17,7 +18,7 @@ const DataList = ({props}) => {
                 Header: "Title",
                 accessor: "title",
                 Cell: ({ value }) => (
-                    <div className="d-flex px-2 py-1">
+                    <div className="d-flex">
                         <div>
                             <FontAwesomeIcon icon={faBriefcase} size={"2x"} style={{marginRight: '10px'}}/>
                         </div>
@@ -37,17 +38,23 @@ const DataList = ({props}) => {
                 Cell: ({ row }) => (
                     <div>
                         <Link to={`/positions/edit/${row.original.id}`}>
-                            <FontAwesomeIcon icon={faPen} title={"Edit"}   style={{color: 'purple', cursor: 'pointer', marginRight: '5px'}}/>
-                            <span className={"ml-2"}>Edit</span>
+                            <FontAwesomeIcon
+                                data-tooltip-id={"edit_position_tooltip"}
+                                icon={faPenClip} title={"Edit"}  size={"xl"}
+                                style={{color: 'purple', cursor: 'pointer', marginRight: '10px'}}
+                            />
                         </Link>
-                        <span className={"cursor-pointer"} onClick={(e) => openModal(row.original.id)}>
+                        <span
+                            data-tooltip-id={"delete_position_tooltip"}
+                            className={"cursor-pointer"}
+                            onClick={(e) => openModal(row.original.id)}
+                        >
                             <FontAwesomeIcon
                                 icon={faTrashCan}
                                 title={"Delete position"}
-                                size={"lg"}
-                                style={{marginLeft: '15px', marginRight: '5px', color: 'red', cursor: 'pointer'}}
+                                size={"xl"}
+                                style={{color: 'red', cursor: 'pointer'}}
                             />
-                            <span style={{color: 'red'}} className={"ml-2"}>Delete</span>
                         </span>
                     </div>
                 ),
@@ -102,7 +109,13 @@ const DataList = ({props}) => {
                         <div className="card-header pb-0">
                             <div className="row d-flex px-2 py-1 align-items-center">
                                 <div className={"col-md"}>
-                                    <h6>Positions</h6>
+                                    <h6>
+                                        <FontAwesomeIcon
+                                            icon={faListUl} size={"xl"}
+                                            style={{marginRight: '10px'}}
+                                        />
+                                        Positions
+                                    </h6>
                                 </div>
                                 <SearchBox
                                     filterInput={filterInput}
@@ -110,9 +123,13 @@ const DataList = ({props}) => {
                                 />
                             </div>
                         </div>
-                        <div className="card-body px-0 pt-0 pb-2">
-                            <div className="table-responsive p-0">
-                                <Table props={tableProps} />
+                        <div className="card-body">
+                            <div className="table-responsive">
+                                {data.length ===0 ? (
+                                    <div className={"text-center p-3"}>No data available</div>
+                                ) :
+                                    (<Table props={tableProps} />)
+                                }
                             </div>
                         </div>
                     </div>
@@ -134,9 +151,22 @@ const DataList = ({props}) => {
                     breakClassName={"pagination-break"}
                     hrefBuilder={() => null}
                 />
+
+            <Tooltip
+                id="delete_position_tooltip"
+                place="top"
+                content="Delete position"
+                variant={"dark"}
+            />
+            <Tooltip
+                id="edit_position_tooltip"
+                place="top"
+                content="Edit position"
+                variant={"dark"}
+            />
         </div>
 
     );
 };
 
-export default DataList;
+export default PositionsDataList;

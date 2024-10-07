@@ -3,23 +3,33 @@ import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {createPosition} from "../../../api";
 import Layout from "../../Layout/Layout";
-import SimpleForm from "../../Common/SimpleForm/SimpleForm";
+import AddPositionForm from "./AddPositionForm/AddPositionForm";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {toast} from "react-toastify";
 
 const AddPosition = () => {
-    const [serverErrorMessage, setServerErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [saveButton, setSaveButton] = useState('Save');
     const navigate = useNavigate();
-
     const {register, handleSubmit, formState: {errors}} = useForm();
 
     const onSubmit = async (data) => {
         try {
+            setLoading(true);
+            setSaveButton(
+                <>
+                <FontAwesomeIcon icon={faSpinner} spin size={"xl"} style={{marginRight: '10px'}}/>
+                Loading...
+                </>
+            );
             await createPosition(data);
-            setServerErrorMessage('');
-            setSuccessMessage("New position created successfully.");
+            toast.success("Position created successfully.");
             setTimeout(() => navigate('/positions'), 2000);
         } catch (error) {
-            setServerErrorMessage('Failed to create the position');
+            setLoading(false);
+            setSaveButton('Save');
+            toast.error("Failed to create a position.");
         }
     }
 
@@ -30,10 +40,13 @@ const AddPosition = () => {
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-body">
-                                <SimpleForm register={register} errors={errors}/>
-                                <button className={"btn btn-dark btn-sm ms-auto"}>Save</button>
-                                {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
-                                {successMessage && <p className="success-message">{successMessage}</p>}
+                                <AddPositionForm register={register} errors={errors}/>
+                                <button
+                                    disabled={loading}
+                                    className={"btn btn-dark btn-sm ms-auto"}
+                                >
+                                    {saveButton}
+                                </button>
                             </div>
                         </div>
                     </div>
