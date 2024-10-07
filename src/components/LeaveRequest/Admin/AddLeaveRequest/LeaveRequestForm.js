@@ -3,8 +3,6 @@ import {useForm, Controller} from "react-hook-form";
 import Layout from "../../../Layout/Layout";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import 'react-time-picker/dist/TimePicker.css';
-import 'react-clock/dist/Clock.css';
 import {createLeaveRequest, getLeaveBalanceData} from "../../../../api";
 import {useNavigate} from "react-router-dom";
 import {faPersonWalkingLuggage, faHouseMedical} from "@fortawesome/free-solid-svg-icons";
@@ -15,29 +13,16 @@ const LeaveRequestForm = () => {
     const {user} = useContext(UserContext);
     const [serverErrorMessage, setServerErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-    // const [leaveDurationRadio, setLeaveDurationOptionRadio] = useState('full-day');
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
-    // const [startTime, setStartTime] = useState(null);
-    // const [endTime, setEndTime] = useState(null);
     const [isHalfDay, setIsHalfDay] = useState(false);
     const [leaveBalance, setLeaveBalance] = useState({});
 
-    const {register, unregister, handleSubmit, control, formState: {errors}, getValues} = useForm();
+    const {register, handleSubmit, control, formState: {errors}} = useForm();
     const navigate = useNavigate();
     const handleSwitcherButton = (e) => {
         setIsHalfDay(e);
     };
-    const handleLeaveDurationRadio = (e) => {
-        const value = e.target.value;
-        // setLeaveDurationOptionRadio(value);
-        if (value === 'hourly')
-            unregister('leaveDuration');
-        else {
-            unregister('startTime');
-            unregister('endTime');
-        }
-    }
 
     const handleDateChange = (dates) => {
         const [start, end] = dates;
@@ -50,7 +35,7 @@ const LeaveRequestForm = () => {
             ...data,
             startDate,
             endDate,
-            userId: 'EABD8853-53E3-440F-88FD-AF7E121B61EB'
+            userId: user.id
         };
 
         try {
@@ -134,37 +119,12 @@ const LeaveRequestForm = () => {
                                                             onChange={(e) => handleSwitcherButton(e.target.checked)}
                                                         />
                                                     </div>
-                                                    {/*<div className="form-check">*/}
-                                                    {/*    <input*/}
-                                                    {/*        className="form-check-input"*/}
-                                                    {/*        type="radio"*/}
-                                                    {/*        name="isHalfDay"*/}
-                                                    {/*        id="isHalfDay"*/}
-                                                    {/*        checked={leaveDurationRadio === 'isHalfDay'}*/}
-                                                    {/*        value={"isHalfDay"}*/}
-                                                    {/*        onChange={handleLeaveDurationRadio}*/}
-                                                    {/*    />*/}
-                                                    {/*    <label className="form-check-label" htmlFor="isHalfDay">Half day</label>*/}
-                                                    {/*</div>*/}
-                                                    {/*<div className="form-check" style={{marginLeft: '25px'}}>*/}
-                                                    {/*    <input*/}
-                                                    {/*        className="form-check-input"*/}
-                                                    {/*        type="radio"*/}
-                                                    {/*        name="isHalfDay"*/}
-                                                    {/*        id="hourly"*/}
-                                                    {/*        value="hourly"*/}
-                                                    {/*        checked={leaveDurationRadio === 'hourly'}*/}
-                                                    {/*        onChange={handleLeaveDurationRadio}*/}
-                                                    {/*    />*/}
-                                                    {/*    <label className="form-check-label" htmlFor="hourly">Hourly</label>*/}
-                                                    {/*</div>*/}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className={"row"}>
-                                        {/*{leaveDurationRadio === 'full-day' && (*/}
                                             <div className="col-md-6">
                                                 <Controller
                                                     name="leaveDuration"
@@ -188,41 +148,6 @@ const LeaveRequestForm = () => {
                                                 />
                                                 {errors.leaveDuration && <span style={{ color: 'red', fontSize: '12px' }}>{errors.leaveDuration.message}</span>}
                                             </div>
-                                        {/*)}*/}
-
-                                        {/*{leaveDurationRadio === 'hourly' && (*/}
-                                        {/*    <div className={"col-md-6"}>*/}
-                                        {/*        <div className="form-group">*/}
-                                        {/*            <label htmlFor="startTime">Start Time</label>*/}
-                                        {/*            <input*/}
-                                        {/*                type="time"*/}
-                                        {/*                className={"form-control"}*/}
-                                        {/*                name={"startTime"}*/}
-                                        {/*                onChange={(e) => setStartTime(e.target.value)}*/}
-                                        {/*                {...register('startTime', {*/}
-                                        {/*                    required: 'Start time is required',*/}
-                                        {/*                    validate: (value) => {*/}
-                                        {/*                        const endTime = getValues("endTime");*/}
-                                        {/*                        return endTime ? value <= endTime || 'Start time must be earlier than end time' : true;*/}
-                                        {/*                    }*/}
-                                        {/*                })}*/}
-                                        {/*            />*/}
-                                        {/*            {errors.startTime && <span style={{ color: 'red', fontSize: '12px' }}>{errors.startTime.message}</span>}*/}
-                                        {/*        </div>*/}
-                                        {/*        <div className="form-group">*/}
-                                        {/*            <label htmlFor="endTime">End Time</label>*/}
-                                        {/*            <input*/}
-                                        {/*                type="time"*/}
-                                        {/*                className={"form-control"}*/}
-                                        {/*                name={"endTime"}*/}
-                                        {/*                onChange={(e) => setEndTime(e.target.value)}*/}
-                                        {/*                {...register('endTime', {*/}
-                                        {/*                    required: 'End time is required',*/}
-                                        {/*                })}*/}
-                                        {/*            />*/}
-                                        {/*        </div>*/}
-                                        {/*    </div>*/}
-                                        {/*)}*/}
                                     </div>
                                     <div className={"mt-3"}>
                                         <button className={"btn btn-dark btn-sm ms-auto"}>Submit</button>
