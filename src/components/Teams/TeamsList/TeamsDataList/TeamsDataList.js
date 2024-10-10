@@ -22,7 +22,7 @@ const TeamsDataList = ({props}) => {
                             <FontAwesomeIcon icon={faPeopleGroup} size={"2x"} style={{marginRight: '10px'}}/>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                            <h6 className="mb-0 text-sm">{ value}</h6>
+                            <h6 className="mb-0 text-sm">{value}</h6>
                         </div>
                     </div>
                 ),
@@ -30,6 +30,10 @@ const TeamsDataList = ({props}) => {
             {
                 Header: "Description",
                 accessor: "description",
+            },
+            {
+                Header: "Department",
+                accessor: "department.name",
             },
             {
                 Header: "Action",

@@ -84,7 +84,7 @@ const EditTeam = () => {
                         <div className="card">
                             <div className="card-body">
                                 <AddTeamForm departments={departments} register={register} errors={errors}/>
-                                <button className={"btn btn-dark btn-sm ms-auto"}>{saveButton}</button>
+                                <button disabled={loading} className={"btn btn-dark btn-sm ms-auto"}>{saveButton}</button>
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,14 @@
 import React from "react";
+import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleLeft} from "@fortawesome/free-solid-svg-icons";
 
 const AddDepartmentForm = ({register, errors}) => {
     return (
         <div>
+            <Link to={"/departments"}>
+                <FontAwesomeIcon icon={faCircleLeft} size={"2x"} style={{marginBottom: '10px', cursor: 'pointer'}}/>
+            </Link>
             <p className="text-uppercase text-sm">Department Information</p>
             <div className="row">
                 <div className="col-md-6">

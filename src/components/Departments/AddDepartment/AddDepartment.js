@@ -3,23 +3,34 @@ import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {createDepartment} from "../../../api";
 import Layout from "../../Layout/Layout";
-import AddDepartmentForm from "../AddDepartmentForm/AddDepartmentForm";
+import AddDepartmentForm from "./AddDepartmentForm/AddDepartmentForm";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {toast} from "react-toastify";
 
 const AddDepartment = () => {
-    const [serverErrorMessage, setServerErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [saveButton, setSaveButton] = useState('Save');
     const navigate = useNavigate();
 
     const {register, handleSubmit, formState: {errors}} = useForm();
 
     const onSubmit = async (data) => {
         try {
+            setLoading(true);
+            setSaveButton(
+                <>
+                    <FontAwesomeIcon icon={faSpinner} spin size={"xl"} style={{marginRight: '10px'}}/>
+                    Loading...
+                </>
+            );
             await createDepartment(data);
-            setServerErrorMessage('');
-            setSuccessMessage("New department created successfully.");
+            toast.success("Department created successfully.");
             setTimeout(() => navigate('/departments'), 2000);
         } catch (error) {
-            setServerErrorMessage('Failed to create the department');
+            setLoading(false);
+            setSaveButton('Save');
+            toast.error("Failed to create a department.");
         }
     }
 
@@ -31,9 +42,7 @@ const AddDepartment = () => {
                         <div className="card">
                             <div className="card-body">
                                 <AddDepartmentForm register={register} errors={errors}/>
-                                <button className={"btn btn-dark btn-sm ms-auto"}>Save</button>
-                                {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
-                                {successMessage && <p className="success-message">{successMessage}</p>}
+                                <button disabled={loading} className={"btn btn-dark btn-sm ms-auto"}>{saveButton}</button>
                             </div>
                         </div>
                     </div>

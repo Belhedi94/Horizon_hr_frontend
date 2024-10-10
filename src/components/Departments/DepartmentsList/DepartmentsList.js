@@ -4,7 +4,8 @@ import ConfirmDeleteModal from "../../Modals/ConfirmDeleteModal/ConfirmDeleteMod
 import {getAllDepartments} from "../../../api";
 import AddButton from "../../Common/AddButton/AddButton";
 import {deleteDepartment} from "../../../api";
-import DepartmentsDataList from "../DepartmentsDataList/DepartmentsDataList";
+import DepartmentsDataList from "./DepartmentsDataList/DepartmentsDataList";
+import { toast } from 'react-toastify';
 
 const DepartmentsList = () => {
     const [data, setData] = useState([]);
@@ -33,9 +34,14 @@ const DepartmentsList = () => {
 
     const handleDelete = async () => {
         const response = await deleteDepartment(selectedDepartment);
-        if (response.status === 200)
+        if (response.status === 200) {
             closeModal();
-        await fetchData();
+            toast.success("Department deleted successfully!");
+            await fetchData();
+        }
+        else
+            toast.error("Failed to delete the Department.");
+
     };
 
     const fetchData = async () => {
