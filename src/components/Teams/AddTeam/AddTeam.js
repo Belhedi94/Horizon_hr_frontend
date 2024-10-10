@@ -3,24 +3,35 @@ import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {createTeam, getAllDepartments} from "../../../api";
 import Layout from "../../Layout/Layout";
-import AddTeamForm from "../AddTeamFrom/AddTeamForm";
+import AddTeamForm from "./AddTeamFrom/AddTeamForm";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {toast} from "react-toastify";
 
 const AddTeam = () => {
-    const [serverErrorMessage, setServerErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [saveButton, setSaveButton] = useState('Save');
     const [departments, setDepartments] = useState([]);
     const navigate = useNavigate();
 
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const {register, setValue, handleSubmit, formState: {errors}} = useForm();
 
     const onSubmit = async (data) => {
         try {
+            setLoading(true);
+            setSaveButton(
+                <>
+                    <FontAwesomeIcon icon={faSpinner} spin size={"xl"} style={{marginRight: '10px'}}/>
+                    Loading...
+                </>
+            );
             await createTeam(data);
-            setServerErrorMessage('');
-            setSuccessMessage("New team created successfully.");
+            toast.success("Team created successfully.");
             setTimeout(() => navigate('/teams'), 2000);
         } catch (error) {
-            setServerErrorMessage('Failed to create the team');
+            setLoading(false);
+            setSaveButton('Save');
+            toast.error("Failed to create a team.");
         }
     }
 
@@ -43,10 +54,13 @@ const AddTeam = () => {
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-body">
-                                <AddTeamForm register={register} errors={errors} departments={departments}/>
-                                <button className={"btn btn-dark btn-sm ms-auto"}>Save</button>
-                                {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
-                                {successMessage && <p className="success-message">{successMessage}</p>}
+                                <AddTeamForm register={register} setValue={setValue} errors={errors} departments={departments}/>
+                                <button
+                                    className={"btn btn-dark btn-sm ms-auto"}
+                                    disabled={loading}
+                                >
+                                    {saveButton}
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -40,7 +40,8 @@ const PositionsDataList = ({props}) => {
                         <Link to={`/positions/edit/${row.original.id}`}>
                             <FontAwesomeIcon
                                 data-tooltip-id={"edit_position_tooltip"}
-                                icon={faPenClip} title={"Edit"}  size={"xl"}
+                                icon={faPenClip}
+                                size={"xl"}
                                 style={{color: 'purple', cursor: 'pointer', marginRight: '10px'}}
                             />
                         </Link>
@@ -51,7 +52,6 @@ const PositionsDataList = ({props}) => {
                         >
                             <FontAwesomeIcon
                                 icon={faTrashCan}
-                                title={"Delete position"}
                                 size={"xl"}
                                 style={{color: 'red', cursor: 'pointer'}}
                             />
@@ -126,7 +126,10 @@ const PositionsDataList = ({props}) => {
                         <div className="card-body">
                             <div className="table-responsive">
                                 {data.length ===0 ? (
+                                    <>
+                                    <hr className={"horizontal dark"}/>
                                     <div className={"text-center p-3"}>No data available</div>
+                                    </>
                                 ) :
                                     (<Table props={tableProps} />)
                                 }

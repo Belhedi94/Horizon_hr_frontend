@@ -1,9 +1,14 @@
 import React from "react";
-import {options} from "axios";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleLeft} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
 
 const AddTeamForm = ({register, errors, departments}) => {
     return (
         <div>
+            <Link to={"/teams"}>
+                <FontAwesomeIcon icon={faCircleLeft} size={"2x"} style={{marginBottom: '10px', cursor: 'pointer'}}/>
+            </Link>
             <p className="text-uppercase text-sm">Team Information</p>
             <div className="row">
                 <div className="col-md-6">

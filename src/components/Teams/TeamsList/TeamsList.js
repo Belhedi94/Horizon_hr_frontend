@@ -4,8 +4,8 @@ import ConfirmDeleteModal from "../../Modals/ConfirmDeleteModal/ConfirmDeleteMod
 import {getAllTeams} from "../../../api";
 import AddButton from "../../Common/AddButton/AddButton";
 import {deleteTeam} from "../../../api";
-import DepartmentsDataList from "../../Departments/DepartmentsDataList/DepartmentsDataList";
 import TeamsDataList from "./TeamsDataList/TeamsDataList";
+import { toast } from 'react-toastify';
 
 const TeamsList = () => {
     const [data, setData] = useState([]);
@@ -33,9 +33,9 @@ const TeamsList = () => {
     };
 
     const handleDelete = async () => {
-        const response = await deleteTeam(selectedTeam);
-        // if (response.status === 200)
+        await deleteTeam(selectedTeam);
         closeModal();
+        toast.success("Team deleted successfully!");
         await fetchData();
     };
 
