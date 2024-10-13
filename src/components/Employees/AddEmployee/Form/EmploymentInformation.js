@@ -1,6 +1,6 @@
 import React from "react";
 
-const EmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHidden}) => {
+const EmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHidden, teams, positions}) => {
 
     return(
         <div>
@@ -98,15 +98,16 @@ const EmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHi
                         <label htmlFor={"position"}>Position<span className={"red-star"}>*</span></label>
                         <select
                             id="position"
-                            className={`form-control ${errors.employment_type ? 'is-invalid' : ''}`}
+                            className={`form-control ${errors.employmentDetails?.positionId ? 'is-invalid' : ''}`}
                             {...register('employmentDetails.positionId', {
                                 required: 'Position type is required',
                                 validate: (value) => value !== "" || 'Please select a position'
                             })}
                         >
                             <option value="">Select a position</option>
-                            <option value="7B2DC76E-96C2-483C-F25E-08DCB1B24F03">Developer</option>
-                            <option value="Designer">Designer</option>
+                            {positions.map(position => (
+                                <option key={position.id} value={position.id}>{position.title}</option>
+                            ))}
                         </select>
                         {errors.employmentDetails?.positionId && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.positionId.message}</span>}
                     </div>
@@ -116,15 +117,16 @@ const EmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHi
                         <label htmlFor={"team"}>Team<span className={"red-star"}>*</span></label>
                         <select
                             id="team"
-                            className={`form-control ${errors.employment_type ? 'is-invalid' : ''}`}
+                            className={`form-control ${errors.team ? 'is-invalid' : ''}`}
                             {...register('employmentDetails.teamId', {
                                 required: 'Team is required',
                                 validate: (value) => value !== "" || 'Please select a team'
                             })}
                         >
                             <option value="">Select a team</option>
-                            <option value="54A78A11-B163-4CE0-EFBD-08DCB1B238D2">IT</option>
-                            <option value="HR">HR</option>
+                            {teams.map(team => (
+                                <option key={team.id} value={team.id}>{team.name}</option>
+                            ))}
                         </select>
                         {errors.employmentDetails?.teamId && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.teamId.message}</span>}
                     </div>

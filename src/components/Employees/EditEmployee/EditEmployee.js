@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import {getEmployeeData, updateEmployee} from "../../../api";
+import {getAllPositions, getAllTeams, getEmployeeData, updateEmployee} from "../../../api";
 import EditEmployeeInformation from "./Form/EditEmployeeInformation";
 import Layout from "../../Layout/Layout";
 import EditContactInformation from "./Form/EditContactInformation";
@@ -11,14 +11,19 @@ import {formatDateForInput} from "../../utils/dateUtils";
 import EditBankAccountInformation from "./Form/EditBankAccountInformation";
 import {buildFormatData} from "../../utils/formatDataHelper";
 import BankAccountSwitcher from "./Form/BankAccountSwitcher";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {toast} from "react-toastify";
 
 const EditEmployee = () => {
     const {id} = useParams();
     const [employee, setEmployee] = useState({});
     const [cnssFieldIsHidden, setCnssFieldIsHidden] = useState(true);
     const [bankAccountSectionIsHidden, setBankAccountSectionIsHidden] = useState(false);
-    const [serverErrorMessage, setServerErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [teams, setTeams] = useState([]);
+    const [positions, setPositions] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [saveButton, setSaveButton] = useState('Save');
     const navigate = useNavigate();
 
     const fetchEmployee = async () => {
@@ -43,10 +48,6 @@ const EditEmployee = () => {
             console.log('Error fetching employee data: ', error);
         }
     }
-
-    useEffect( () => {
-        fetchEmployee();
-    }, [id]);
 
     const handleSwitcherButton = (bankAccountToggleActivated) => {
         if (!bankAccountToggleActivated)
@@ -85,8 +86,8 @@ const EditEmployee = () => {
                 joiningDate: formatDateForInput(employee.employmentDetails?.joiningDate),
                 probationPeriod: employee.employmentDetails?.probationPeriod,
                 salary: employee.employmentDetails?.salary,
-                positionId: employee.employmentDetails?.positionId,
-                teamId: employee.employmentDetails?.teamId,
+                positionId: employee.employmentDetails?.position?.id,
+                teamId: employee.employmentDetails?.team.id,
             },
             bankAccount: {
                 holderName: employee.bankAccount?.holderName,
@@ -102,14 +103,37 @@ const EditEmployee = () => {
             unregister('cnssRegistrationNumber');
         const formData = buildFormatData(employeeData);
         try {
-            await updateEmployee(id, formData);
-            setServerErrorMessage('');
-            setSuccessMessage("Employee updated successfully.");
+            setLoading(true);
+            setSaveButton(
+                <>
+                    <FontAwesomeIcon icon={faSpinner} spin size={"xl"} style={{marginRight: '10px'}}/>
+                    Loading...
+                </>
+            );
+            await updateEmployee(formData);
+            toast.success("Employee updated successfully.");
             setTimeout(() => navigate('/employees'), 2000);
         } catch (error) {
-            setServerErrorMessage('Failed to update the employee data');
+            setLoading(false);
+            setSaveButton('Save');
+            toast.error("Failed to update an employee.");
         }
     }
+
+    const fetchData = async () => {
+        const pageNumber = 0;
+        const pageSize = 10;
+        const filter = '';
+        await fetchEmployee();
+        const positionsData = await getAllPositions(pageNumber, pageSize, filter, false);
+        const teamsData = await getAllTeams(pageNumber, pageSize, filter, false);
+        setTeams(teamsData.items);
+        setPositions(positionsData.items);
+    };
+
+    useEffect( () => {
+        fetchData();
+    }, [id]);
 
     return(
         <Layout title={"Edit Employee"}>
@@ -135,6 +159,8 @@ const EditEmployee = () => {
                                     errors={errors}
                                     handleCnssField={handleCnssField}
                                     cnssFieldIsHidden={cnssFieldIsHidden}
+                                    teams={teams}
+                                    positions={positions}
                                 />
                                 <BankAccountSwitcher
                                     bankAccountSectionIsHidden={bankAccountSectionIsHidden}
@@ -150,9 +176,9 @@ const EditEmployee = () => {
                                     />
                                 )}
 
-                                <button className={"btn btn-dark btn-sm ms-auto"}>Update</button>
-                                {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
-                                {successMessage && <p className="success-message">{successMessage}</p>}
+                                <button disabled={loading} className={"btn btn-dark btn-sm ms-auto"}>
+                                    {saveButton}
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -45,8 +45,8 @@ const EditAdditionalInformation = ({register, errors}) => {
                             })}
                         >
                             <option value="">Select gender</option>
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                         {errors.gender && <span style={{ color: 'red', fontSize: '12px' }}>{errors.gender.message}</span>}
                     </div>

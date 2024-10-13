@@ -36,7 +36,7 @@ const AddTeam = () => {
     }
 
     const fetchDepartments = async () => {
-        const pageNumber = 1;
+        const pageNumber = 0;
         const pageSize = 10;
         const filter = '';
         const departments = await getAllDepartments(pageNumber, pageSize, filter, false);

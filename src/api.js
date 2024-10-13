@@ -65,16 +65,16 @@ export const updateLeaveRequest = async (id, data) => {
     }
 }
 
-export const getAllPositions = async (pageNumber, pageSize, filter) => {
+export const getAllPositions = async (pageNumber, pageSize, filter, usePagination) => {
     try {
         const response = await axios.get("https://localhost:7292/api/positions", {
             params: {
                 pageNumber: pageNumber + 1,
                 pageSize: pageSize,
                 filter: filter,
+                usePagination: usePagination
             },
         });
-
         return response.data.data;
     } catch (error) {
         console.error("Failed to fetch data", error);
@@ -174,13 +174,14 @@ export const updateDepartment = async (id, data) => {
 
 //Team api endpoints
 
-export const getAllTeams = async (pageNumber, pageSize, filter) => {
+export const getAllTeams = async (pageNumber, pageSize, filter, usePagination) => {
     try {
         const response = await axios.get("https://localhost:7292/api/teams", {
             params: {
                 pageNumber: pageNumber + 1,
                 pageSize: pageSize,
-                filter: filter
+                filter: filter,
+                usePagination: usePagination
             },
         });
 
@@ -240,4 +241,32 @@ export const getLeaveBalanceData = async (userId) => {
         throw new Error(error.response ? error.response.message : 'Error getting leave balance data');
     }
 }
+
+//Employees endpoints
+
+export const getAllEmployees = async (pageNumber, pageSize, filter) => {
+    try {
+        const response = await axios.get("https://localhost:7292/api/users", {
+            params: {
+                pageNumber: pageNumber + 1,
+                pageSize: pageSize,
+                filter: filter,
+            },
+        });
+
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch data", error);
+    }
+}
+
+export const deleteEmployee = async(id) => {
+    try {
+        const response = await axios.delete(`${API_URL}/users/${id}`);
+        return response.data;
+    }  catch(error) {
+        console.log("Failed to delete an employee", error);
+    }
+};
+
 

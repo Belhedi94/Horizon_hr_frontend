@@ -32,7 +32,7 @@ const AdditionalInformation = ({register, errors}) => {
                                placeholder={"Please type the date of birth"}
                                id={"date_of_birth"}
                         />
-                        {errors.date_of_birth && <span style={{ color: 'red', fontSize: '12px' }}>{errors.date_of_birth.message}</span>}
+                        {errors.dateOfBirth && <span style={{ color: 'red', fontSize: '12px' }}>{errors.dateOfBirth.message}</span>}
                     </div>
                 </div>
                 <div className="col-md-6">
@@ -47,8 +47,8 @@ const AdditionalInformation = ({register, errors}) => {
                             })}
                         >
                             <option value="">Select gender</option>
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                         {errors.gender && <span style={{ color: 'red', fontSize: '12px' }}>{errors.gender.message}</span>}
                     </div>
@@ -68,7 +68,7 @@ const AdditionalInformation = ({register, errors}) => {
                             <option value="Single">Single</option>
                             <option value="Married">Married</option>
                         </select>
-                        {errors.marital_status && <span style={{ color: 'red', fontSize: '12px' }}>{errors.marital_status.message}</span>}
+                        {errors.maritalStatus && <span style={{ color: 'red', fontSize: '12px' }}>{errors.maritalStatus.message}</span>}
                     </div>
                 </div>
                 <div className="col-md-6">

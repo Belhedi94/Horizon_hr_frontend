@@ -1,6 +1,6 @@
 import React from "react";
 
-const EditEmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHidden}) => {
+const EditEmploymentInformation = ({register, errors, handleCnssField, cnssFieldIsHidden, teams, positions}) => {
     return(
         <div>
             <p className="text-uppercase text-sm">Employment information</p>
@@ -104,8 +104,9 @@ const EditEmploymentInformation = ({register, errors, handleCnssField, cnssField
                             })}
                         >
                             <option value="">Select a position</option>
-                            <option value="7b2dc76e-96c2-483c-f25e-08dcb1b24f03">Developer</option>
-                            <option value="Designer">Designer</option>
+                            {positions.map((position, index) => (
+                                <option key={`${position}-key-${index}`} value={position.id}>{position.title}</option>
+                            ))}
                         </select>
                         {errors.employmentDetails?.positionId && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.positionId.message}</span>}
                     </div>
@@ -122,8 +123,9 @@ const EditEmploymentInformation = ({register, errors, handleCnssField, cnssField
                             })}
                         >
                             <option value="">Select a team</option>
-                            <option value="54a78a11-b163-4ce0-efbd-08dcb1b238d2">IT</option>
-                            <option value="HR">HR</option>
+                            {teams.map(team => (
+                                <option key={team.id} value={team.id}>{team.name}</option>
+                            ))}
                         </select>
                         {errors.employmentDetails?.teamId && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employmentDetails.teamId.message}</span>}
                     </div>

@@ -41,10 +41,7 @@ const AddPosition = () => {
                         <div className="card">
                             <div className="card-body">
                                 <AddPositionForm register={register} errors={errors}/>
-                                <button
-                                    disabled={loading}
-                                    className={"btn btn-dark btn-sm ms-auto"}
-                                >
+                                <button disabled={loading} className={"btn btn-dark btn-sm ms-auto"}>
                                     {saveButton}
                                 </button>
                             </div>
