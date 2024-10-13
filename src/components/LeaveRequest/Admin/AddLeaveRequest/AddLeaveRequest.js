@@ -3,16 +3,18 @@ import {useForm, Controller} from "react-hook-form";
 import Layout from "../../../Layout/Layout";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import {createLeaveRequest, getLeaveBalanceData} from "../../../../api";
-import {useNavigate} from "react-router-dom";
-import {faPersonWalkingLuggage, faHouseMedical} from "@fortawesome/free-solid-svg-icons";
+import {createLeaveRequest, createPosition, getLeaveBalanceData} from "../../../../api";
+import {Link, useNavigate} from "react-router-dom";
+import {faPersonWalkingLuggage, faHouseMedical, faCircleLeft} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {UserContext} from "../../../../contexts/UserContext";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {toast} from "react-toastify";
 
-const LeaveRequestForm = () => {
+const AddLeaveRequest = () => {
     const {user} = useContext(UserContext);
-    const [serverErrorMessage, setServerErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [saveButton, setSaveButton] = useState('Save');
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [isHalfDay, setIsHalfDay] = useState(false);
@@ -30,25 +32,50 @@ const LeaveRequestForm = () => {
         setEndDate(end);
     };
 
+    // const onSubmit = async (data) => {
+    //     const leaveRequestData = {
+    //         ...data,
+    //         startDate,
+    //         endDate,
+    //         userId: user.id
+    //     };
+    //
+    //     try {
+    //         await createLeaveRequest(leaveRequestData);
+    //         setServerErrorMessage('');
+    //         setSuccessMessage("Leave request created successfully.");
+    //         setTimeout(() => navigate('/requests/leaves'), 2000);
+    //     } catch(error) {
+    //         setSuccessMessage('');
+    //         setServerErrorMessage('Failed to submit a leave request');
+    //     }
+    //
+    // };
+
     const onSubmit = async (data) => {
-        const leaveRequestData = {
-            ...data,
-            startDate,
-            endDate,
-            userId: user.id
-        };
-
         try {
+            const leaveRequestData = {
+                ...data,
+                startDate,
+                endDate,
+                userId: user.id
+            };
+            setLoading(true);
+            setSaveButton(
+                <>
+                    <FontAwesomeIcon icon={faSpinner} spin size={"xl"} style={{marginRight: '10px'}}/>
+                    Loading...
+                </>
+            );
             await createLeaveRequest(leaveRequestData);
-            setServerErrorMessage('');
-            setSuccessMessage("Leave request created successfully.");
+            toast.success("Leave request submitted successfully.");
             setTimeout(() => navigate('/requests/leaves'), 2000);
-        } catch(error) {
-            setSuccessMessage('');
-            setServerErrorMessage('Failed to submit a leave request');
+        } catch (error) {
+            setLoading(false);
+            setSaveButton('Submit');
+            toast.error("Failed to submit a leave request.");
         }
-
-    };
+    }
 
     const fetchLeaveBalance = async (userId) => {
         const data =  await getLeaveBalanceData(userId);
@@ -69,6 +96,9 @@ const LeaveRequestForm = () => {
                         <div className="col-md-8">
                             <div className="card">
                                 <div className="card-body">
+                                    <Link to={"/requests/leaves"}>
+                                        <FontAwesomeIcon icon={faCircleLeft} size={"2x"} style={{marginBottom: '10px', cursor: 'pointer'}}/>
+                                    </Link>
                                     <p className="text-uppercase text-sm">Leave request details</p>
                                     <div className="row">
                                         <div className="col-md-8">
@@ -150,9 +180,7 @@ const LeaveRequestForm = () => {
                                             </div>
                                     </div>
                                     <div className={"mt-3"}>
-                                        <button className={"btn btn-dark btn-sm ms-auto"}>Submit</button>
-                                        {serverErrorMessage && <p className="error-message">{serverErrorMessage}</p>}
-                                        {successMessage && <p className="success-message">{successMessage}</p>}
+                                        <button className={"btn btn-dark btn-sm ms-auto"}>{saveButton}</button>
                                     </div>
                                 </div>
                             </div>
@@ -202,4 +230,4 @@ const LeaveRequestForm = () => {
     );
 };
 
-export default LeaveRequestForm;
+export default AddLeaveRequest;

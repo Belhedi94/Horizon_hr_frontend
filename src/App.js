@@ -7,7 +7,7 @@ import EmployeesList from "./components/Employees/EmployeesList/EmployeesList";
 import AddEmployee from "./components/Employees/AddEmployee/AddEmployee";
 import PositionsList from "./components/Positions/PositionsList/PositionsList";
 import EditEmployee from "./components/Employees/EditEmployee/EditEmployee";
-import LeaveRequestForm from "./components/LeaveRequest/Admin/AddLeaveRequest/LeaveRequestForm";
+import AddLeaveRequest from "./components/LeaveRequest/Admin/AddLeaveRequest/AddLeaveRequest";
 import LeaveRequestsList from "./components/LeaveRequest/Admin/LeaveRequestsList/LeaveRequestsList";
 import EditLeaveRequest from "./components/LeaveRequest/Admin/EditLeaveRequest/EditLeaveRequest";
 import AddPosition from "./components/Positions/AddPosition/AddPosition";
@@ -44,7 +44,7 @@ const App = () => {
             <Route path="/teams/add" element={<AddTeam />}/>
             <Route path="/teams/edit/:id" element={<EditTeam />}/>
             <Route path="/requests/leaves" element={<LeaveRequestsList />}/>
-            <Route path="/requests/leaves/add" element={<LeaveRequestForm />}/>
+            <Route path="/requests/leaves/add" element={<AddLeaveRequest />}/>
             <Route path="/requests/leaves/edit/:id" element={<EditLeaveRequest />}/>
           </Routes>
         </Router>

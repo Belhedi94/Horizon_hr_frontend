@@ -46,15 +46,21 @@ export const createLeaveRequest = async (leaveRequestData) => {
     }
 }
 
-export const getAllLeaveRequests = async () => {
+export const getAllLeaveRequests = async (pageNumber, pageSize, filter, usePagination) => {
     try {
-        const response = await axios.get(`${API_URL}/requests/leaves`);
-        return response.data;
+        const response = await axios.get("https://localhost:7292/api/requests/leaves", {
+            params: {
+                pageNumber: pageNumber + 1,
+                pageSize: pageSize,
+                filter: filter,
+                usePagination: usePagination
+            },
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch data", error);
     }
-    catch(error) {
-        throw new Error(error.response ? error.response.message : 'Error getting leave requests data');
-    }
-};
+}
 
 export const updateLeaveRequest = async (id, data) => {
     try {

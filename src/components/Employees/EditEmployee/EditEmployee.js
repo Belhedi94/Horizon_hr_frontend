@@ -110,7 +110,7 @@ const EditEmployee = () => {
                     Loading...
                 </>
             );
-            await updateEmployee(formData);
+            await updateEmployee(id, formData);
             toast.success("Employee updated successfully.");
             setTimeout(() => navigate('/employees'), 2000);
         } catch (error) {
