@@ -275,4 +275,29 @@ export const deleteEmployee = async(id) => {
     }
 };
 
+export const getAllDocumentRequests = async (pageNumber, pageSize, filter, usePagination) => {
+    try {
+        const response = await axios.get("https://localhost:7292/api/requests/documents", {
+            params: {
+                pageNumber: pageNumber + 1,
+                pageSize: pageSize,
+                filter: filter,
+                usePagination: usePagination
+            },
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch data", error);
+    }
+}
+
+export const updateDocumentRequest = async (id, data) => {
+    try {
+        const response = await axios.put(`${API_URL}/requests/documents/${id}`, data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error updating document request');
+    }
+}
+
 

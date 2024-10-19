@@ -21,6 +21,7 @@ import EditTeam from "./components/Teams/EditTeam/EditTeam";
 import {UserProvider} from "./contexts/UserContext";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DocumentRequestsList from "./components/DocumentRequest/Admin/DocumentRequestsList/DocumentRequestsList";
 
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
             <Route path="/requests/leaves" element={<LeaveRequestsList />}/>
             <Route path="/requests/leaves/add" element={<AddLeaveRequest />}/>
             <Route path="/requests/leaves/edit/:id" element={<EditLeaveRequest />}/>
+            <Route path="/requests/documents" element={<DocumentRequestsList />}/>
           </Routes>
         </Router>
         <ToastContainer
