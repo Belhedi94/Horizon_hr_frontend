@@ -300,4 +300,21 @@ export const updateDocumentRequest = async (id, data) => {
     }
 }
 
+export const createDocumentRequest = async (data) => {
+    try {
+        const response = await axios.post(`${API_URL}/requests/documents`, data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error Submitting document request');
+    }
+}
+
+export const deleteDocumentRequest = async(id) => {
+    try {
+        const response = await axios.delete(`${API_URL}/requests/leaves/${id}`);
+        return response.data;
+    }  catch(error) {
+        console.log("Failed to delete a document request", error);
+    }
+};
 

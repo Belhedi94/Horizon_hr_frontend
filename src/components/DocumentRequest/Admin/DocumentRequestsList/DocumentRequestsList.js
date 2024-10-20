@@ -1,10 +1,11 @@
 import React, { useEffect,  useState } from "react";
 import Layout from "../../../Layout/Layout";
-import {getAllDocumentRequests, updateDocumentRequest} from "../../../../api";
+import {deleteDocumentRequest, getAllDocumentRequests, updateDocumentRequest} from "../../../../api";
 import AddButton from "../../../Common/AddButton/AddButton";
 import { toast } from 'react-toastify';
 import DocumentRequestsDataList from "./DocumentRequestsDataList/DocumentRequestsDataList";
 import DocumentRequestDetailsModal from "../../../Modals/DocumentRequestDetailsModal/DocumentRequestDetailsModal";
+import ConfirmDeleteModal from "../../../Modals/ConfirmDeleteModal/ConfirmDeleteModal";
 
 const DocumentRequestsList = () => {
     const [data, setData] = useState([]);
@@ -47,6 +48,18 @@ const DocumentRequestsList = () => {
 
     };
 
+    const handleDelete = async () => {
+        const response = await deleteDocumentRequest(selectedRequest);
+        if (response.status === 200) {
+            closeModal();
+            toast.success("Document request removed successfully!");
+            await fetchData();
+        }
+        else
+            toast.error("Failed to remove the document request.");
+
+    };
+
     const fetchData = async () => {
         setLoading(true);
         try {
@@ -70,6 +83,12 @@ const DocumentRequestsList = () => {
 
     return (
         <Layout title={"Document requests management"}>
+            {/*<ConfirmDeleteModal*/}
+            {/*    isOpen={isModalOpen}*/}
+            {/*    onRequestClose={closeModal}*/}
+            {/*    onConfirmDelete={handleDelete}*/}
+            {/*    item={"request"}*/}
+            {/*/>*/}
             <DocumentRequestDetailsModal
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}

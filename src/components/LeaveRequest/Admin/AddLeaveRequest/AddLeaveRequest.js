@@ -3,7 +3,7 @@ import {useForm, Controller} from "react-hook-form";
 import Layout from "../../../Layout/Layout";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import {createLeaveRequest, createPosition, getLeaveBalanceData} from "../../../../api";
+import {createLeaveRequest, getLeaveBalanceData} from "../../../../api";
 import {Link, useNavigate} from "react-router-dom";
 import {faPersonWalkingLuggage, faHouseMedical, faCircleLeft} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -31,26 +31,6 @@ const AddLeaveRequest = () => {
         setStartDate(start);
         setEndDate(end);
     };
-
-    // const onSubmit = async (data) => {
-    //     const leaveRequestData = {
-    //         ...data,
-    //         startDate,
-    //         endDate,
-    //         userId: user.id
-    //     };
-    //
-    //     try {
-    //         await createLeaveRequest(leaveRequestData);
-    //         setServerErrorMessage('');
-    //         setSuccessMessage("Leave request created successfully.");
-    //         setTimeout(() => navigate('/requests/leaves'), 2000);
-    //     } catch(error) {
-    //         setSuccessMessage('');
-    //         setServerErrorMessage('Failed to submit a leave request');
-    //     }
-    //
-    // };
 
     const onSubmit = async (data) => {
         try {
@@ -180,7 +160,7 @@ const AddLeaveRequest = () => {
                                             </div>
                                     </div>
                                     <div className={"mt-3"}>
-                                        <button className={"btn btn-dark btn-sm ms-auto"}>{saveButton}</button>
+                                        <button disabled={loading} className={"btn btn-dark btn-sm ms-auto"}>{saveButton}</button>
                                     </div>
                                 </div>
                             </div>

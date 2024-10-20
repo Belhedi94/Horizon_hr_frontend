@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import {usePagination, useTable} from "react-table";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faListUl, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faListUl, faCircleCheck, faCircleXmark, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import SearchBox from "../../../../Common/SearchBox/SearchBox";
 import Table from "../../../../Common/Table/Table";
 import ReactPaginate from "react-paginate";
@@ -10,7 +10,8 @@ import {formatDateForInput} from "../../../../utils/dateUtils";
 
 const DocumentRequestsDataList = ({props}) => {
     const baseURL = "https://localhost:7292/";
-    const {data, loading, filterInput, handleFilterChange, openModal, setPageIndex, pageSize, totalItems, changeStatus} = props;
+    const {data, loading, filterInput, handleFilterChange, openModal,
+        setPageIndex, pageSize, totalItems, changeStatus} = props;
 
     const columns = useMemo(
         () => [
@@ -102,6 +103,17 @@ const DocumentRequestsDataList = ({props}) => {
                                 />
                             </>
                         )}
+                        <span
+                            data-tooltip-id={"delete_request_tooltip"}
+                            className={"cursor-pointer"}
+                            onClick={(e) => openModal(row.original.id)}
+                        >
+                            <FontAwesomeIcon
+                                icon={faTrashCan}
+                                size={"xl"}
+                                style={{color: 'red', cursor: 'pointer'}}
+                            />
+                        </span>
                     </div>
                 ),
             },
@@ -201,12 +213,12 @@ const DocumentRequestsDataList = ({props}) => {
                 hrefBuilder={() => null}
             />
 
-            {/*<Tooltip*/}
-            {/*    id="delete_request_tooltip"*/}
-            {/*    place="top"*/}
-            {/*    content="Delete request"*/}
-            {/*    variant={"dark"}*/}
-            {/*/>*/}
+            <Tooltip
+                id="delete_request_tooltip"
+                place="top"
+                content="Delete request"
+                variant={"dark"}
+            />
             <Tooltip
                 id="show_details_tooltip"
                 place="top"
