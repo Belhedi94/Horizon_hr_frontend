@@ -17,7 +17,7 @@ const StatisticsCard = ({title, count, icon}) => {
                         </div>
                         <div className="col-4 text-end">
                             <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                <FontAwesomeIcon icon={icon} style={{color: "#FFFFFF", marginTop: "15px"}} size="1x" />
+                                <FontAwesomeIcon icon={icon} style={{color: "#FFFFFF", marginTop: "12px"}} size="xl" />
                             </div>
                         </div>
                     </div>

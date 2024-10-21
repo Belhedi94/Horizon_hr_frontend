@@ -23,6 +23,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DocumentRequestsList from "./components/DocumentRequest/Admin/DocumentRequestsList/DocumentRequestsList";
 import AddDocumentRequest from "./components/DocumentRequest/Admin/AddDocumentRequest/AddDocumentRequest";
+import AddJobOffer from "./components/JobOffers/AddJobOffer/AddJobOffer";
 
 
 const App = () => {
@@ -50,6 +51,7 @@ const App = () => {
             <Route path="/requests/leaves/edit/:id" element={<EditLeaveRequest />}/>
             <Route path="/requests/documents" element={<DocumentRequestsList />}/>
             <Route path="/requests/documents/add" element={<AddDocumentRequest />}/>
+            <Route path="/jobs/offers/add" element={<AddJobOffer />}/>
           </Routes>
         </Router>
         <ToastContainer

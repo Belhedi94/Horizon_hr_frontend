@@ -46,14 +46,15 @@ export const createLeaveRequest = async (leaveRequestData) => {
     }
 }
 
-export const getAllLeaveRequests = async (pageNumber, pageSize, filter, usePagination) => {
+export const getAllLeaveRequests = async (pageNumber, pageSize, filter, usePagination, forDashboard) => {
     try {
         const response = await axios.get("https://localhost:7292/api/requests/leaves", {
             params: {
                 pageNumber: pageNumber + 1,
                 pageSize: pageSize,
                 filter: filter,
-                usePagination: usePagination
+                usePagination: usePagination,
+                forDashboard: forDashboard
             },
         });
         return response.data.data;
@@ -317,4 +318,13 @@ export const deleteDocumentRequest = async(id) => {
         console.log("Failed to delete a document request", error);
     }
 };
+
+export const createJobOffer = async (data) => {
+    try {
+        const response = await axios.post(`${API_URL}/jobs/offers`, data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error saving job offer');
+    }
+}
 

@@ -96,7 +96,7 @@ const Sidebar = ({
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to={"/career"} className={`nav-link ${activeNav === 'Job_offers' ? 'active' : ''}`} onClick={() => handleNavClick('Job_offers')}>
+                        <Link to={"/offers"} className={`nav-link ${activeNav === 'Job_offers' ? 'active' : ''}`} onClick={() => handleNavClick('Job_offers')}>
                             <div className={`icon ${activeNav === 'Job_offers' ? 'active' : ''} icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center`}>
                                 <FontAwesomeIcon icon={jobOffersIcon} color={activeNav === 'Job_offers' ? 'white' : ''} />
                             </div>

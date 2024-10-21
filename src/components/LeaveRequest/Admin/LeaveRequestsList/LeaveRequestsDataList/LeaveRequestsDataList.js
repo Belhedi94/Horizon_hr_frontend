@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import {usePagination, useTable} from "react-table";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faTrashCan, faListUl, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faListUl, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
 import SearchBox from "../../../../Common/SearchBox/SearchBox";
 import Table from "../../../../Common/Table/Table";
 import ReactPaginate from "react-paginate";
@@ -9,7 +9,8 @@ import { Tooltip } from "react-tooltip";
 
 const LeaveRequestsDataList = ({props}) => {
     const baseURL = "https://localhost:7292/";
-    const {data, loading, filterInput, handleFilterChange, openModal, setPageIndex, pageSize, totalItems, changeStatus} = props;
+    const {data, loading, filterInput, handleFilterChange, openModal,
+        setPageIndex, pageSize, totalItems, changeStatus} = props;
 
     const columns = useMemo(
         () => [
