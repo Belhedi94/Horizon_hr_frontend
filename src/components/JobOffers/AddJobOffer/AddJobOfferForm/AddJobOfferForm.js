@@ -1,10 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import {faCircleLeft} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 
 const AddJobOfferForm = ({register, errors, description, setDescription, setValue}) => {
+    const [editorHtml, setEditorHtml] = useState('');
+
+    const handleChange = (html) => {
+        setEditorHtml(html);
+    };
     return (
         <div>
             <Link to={"/jobs/offers"}>
@@ -12,7 +19,7 @@ const AddJobOfferForm = ({register, errors, description, setDescription, setValu
             </Link>
             <p className="text-uppercase text-sm">Job offer details</p>
             <div className="row">
-                <div className="col-md-8">
+                <div className="col-md-6">
                     <div className="form-group">
                         <label htmlFor={"title"}>Title<span className={"red-star"}>*</span></label>
                         <input {...register('title', { required: 'Title is required' })}
@@ -25,7 +32,7 @@ const AddJobOfferForm = ({register, errors, description, setDescription, setValu
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-8">
+                <div className="col-md-6">
                     <div className="form-group">
                         <label htmlFor={"location"}>Location<span className={"red-star"}>*</span></label>
                         <select
@@ -46,13 +53,22 @@ const AddJobOfferForm = ({register, errors, description, setDescription, setValu
                 </div>
             </div>
             <div className="row">
-                <div className={"col-md-8"}>
+                <div className={"col-md-6"}>
                     <div className="form-group">
                         <label htmlFor={"description"}>Description<span className={"red-star"}>*</span></label>
-
+                        <ReactQuill
+                            value={editorHtml}
+                            onChange={handleChange}
+                            // modules={MyEditor.modules}
+                            // formats={MyEditor.formats}
+                        />
+                        {errors.description && <span style={{ color: 'red', fontSize: '12px' }}>{errors.description.message}</span>}
                     </div>
                 </div>
-                {errors.description && <span style={{ color: 'red', fontSize: '12px' }}>{errors.description.message}</span>}
+                <div className="col-md-6">
+                    <h2>Preview:</h2>
+                    <div dangerouslySetInnerHTML={{ __html: editorHtml }} />
+                </div>
             </div>
             <hr className="horizontal dark" />
         </div>

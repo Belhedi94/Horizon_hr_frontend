@@ -1,17 +1,10 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from 'react';
 import {usePagination, useTable} from "react-table";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faListUl, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
-import SearchBox from "../../../../Common/SearchBox/SearchBox";
-import Table from "../../../../Common/Table/Table";
-import ReactPaginate from "react-paginate";
-import { Tooltip } from "react-tooltip";
-import baseURL from "../../../../../config/config";
+import {faCircleCheck, faCircleXmark, faEye} from "@fortawesome/free-solid-svg-icons";
 
-const LeaveRequestsDataList = ({props}) => {
-    const {data, loading, filterInput, handleFilterChange, openModal,
-        setPageIndex, pageSize, totalItems, changeStatus} = props;
-
+const LastLeaveRequests = ({leaveRequests}) => {
+    const baseURL = "https://localhost:7292/";
     const columns = useMemo(
         () => [
             {
@@ -118,17 +111,6 @@ const LeaveRequestsDataList = ({props}) => {
                                 />
                             </>
                         )}
-                        {/*<span*/}
-                        {/*    data-tooltip-id={"delete_request_tooltip"}*/}
-                        {/*    className={"cursor-pointer"}*/}
-                        {/*    onClick={(e) => openModal(row.original.id)}*/}
-                        {/*>*/}
-                        {/*    <FontAwesomeIcon*/}
-                        {/*        icon={faTrashCan}*/}
-                        {/*        size={"xl"}*/}
-                        {/*        style={{color: 'red', cursor: 'pointer'}}*/}
-                        {/*    />*/}
-                        {/*</span>*/}
                     </div>
                 ),
             },
@@ -162,97 +144,6 @@ const LeaveRequestsDataList = ({props}) => {
         prepareRow,
         page
     };
-
-    const handlePageClick = (e) => {
-        const selectedPage = e.selected;
-        setPageIndex(selectedPage);
-        gotoPage(selectedPage);
-
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    };
-
-    return (
-        <div>
-            <div className="row">
-                <div className="col-12">
-                    <div className="card mb-4">
-                        <div className="card-header pb-0">
-                            <div className="row d-flex px-2 py-1 align-items-center">
-                                <div className={"col-md"}>
-                                    <h6>
-                                        <FontAwesomeIcon
-                                            icon={faListUl} size={"xl"}
-                                            style={{marginRight: '10px'}}
-                                        />
-                                        Leave requests
-                                    </h6>
-                                </div>
-                                <SearchBox filterInput={filterInput} handleFilterChange={handleFilterChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="card-body">
-                            <div className="table-responsive">
-                                {data.length ===0 ? (
-                                    <>
-                                        <hr className={"horizontal dark"}/>
-                                        <div className={"text-center p-3"}>No data available</div>
-                                    </>
-                                    ) :
-                                    (<Table props={tableProps} />)
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <ReactPaginate
-                previousLabel={"Previous"}
-                nextLabel={"Next"}
-                breakLabel={"..."}
-                pageCount={pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={3}
-                onPageChange={handlePageClick}
-                containerClassName={"pagination"}
-                activeClassName={"active"}
-                previousClassName={"pagination-previous"}
-                nextClassName={"pagination-next"}
-                disabledClassName={"pagination-disabled"}
-                breakClassName={"pagination-break"}
-                hrefBuilder={() => null}
-            />
-
-            {/*<Tooltip*/}
-            {/*    id="delete_request_tooltip"*/}
-            {/*    place="top"*/}
-            {/*    content="Delete request"*/}
-            {/*    variant={"dark"}*/}
-            {/*/>*/}
-            <Tooltip
-                id="show_details_tooltip"
-                place="top"
-                content="Show details"
-                variant={"dark"}
-            />
-            <Tooltip
-                id="approve_request_tooltip"
-                place="top"
-                content="Approve"
-                variant={"dark"}
-            />
-            <Tooltip
-                id="reject_request_tooltip"
-                place="top"
-                content="Reject"
-                variant={"dark"}
-            />
-        </div>
-
-    );
 };
 
-export default LeaveRequestsDataList;
+export default LastLeaveRequests;
