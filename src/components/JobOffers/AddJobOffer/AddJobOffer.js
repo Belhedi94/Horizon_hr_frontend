@@ -28,8 +28,6 @@ const AddJobOffer = () => {
                     Loading...
                 </>
             );
-            // Send the raw description data
-            data.description = JSON.parse(data.description);
             await createJobOffer(data);
             toast.success("Job offer created successfully.");
             setTimeout(() => navigate('/jobs/offers'), 2000);
