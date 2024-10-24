@@ -51,6 +51,7 @@ const AddJobOffer = () => {
                                     description={description}
                                     setDescription={setDescription}
                                     setValue={setValue}
+                                    forEdit={false}
                                 />
                                 <button disabled={loading} className={"btn btn-dark btn-sm ms-auto"}>
                                     {saveButton}

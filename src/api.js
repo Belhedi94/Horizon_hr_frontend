@@ -328,3 +328,46 @@ export const createJobOffer = async (data) => {
     }
 }
 
+export const getAllJobOffers = async (pageNumber, pageSize, filter, usePagination) => {
+    try {
+        const response = await axios.get("https://localhost:7292/api/jobs/offers", {
+            params: {
+                pageNumber: pageNumber + 1,
+                pageSize: pageSize,
+                filter: filter,
+                usePagination: usePagination
+            },
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch data", error);
+    }
+}
+
+export const deleteJobOffer = async(id) => {
+    try {
+        const response = await axios.delete(`${API_URL}/jobs/offers/${id}`);
+        return response.data;
+    }  catch(error) {
+        console.log("Failed to delete a job offer", error);
+    }
+};
+
+export const updateJobOffer = async (id, data) => {
+    try {
+        const response = await axios.put(`${API_URL}/jobs/offers/${id}`, data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response ? error.response.message : 'Error updating job offer');
+    }
+}
+
+export const getJobOfferData = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/jobs/offers/${id}`);
+        return response.data.data;
+    } catch(error) {
+        throw new Error(error.response ? error.response.message : 'Error getting job offer data');
+    }
+}
+

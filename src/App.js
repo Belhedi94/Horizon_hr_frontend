@@ -24,6 +24,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import DocumentRequestsList from "./components/DocumentRequest/Admin/DocumentRequestsList/DocumentRequestsList";
 import AddDocumentRequest from "./components/DocumentRequest/Admin/AddDocumentRequest/AddDocumentRequest";
 import AddJobOffer from "./components/JobOffers/AddJobOffer/AddJobOffer";
+import JobOffersList from "./components/JobOffers/JobOffersList/JobOffersList";
+import EditJobOffer from "./components/JobOffers/EditJobOffer/EditJobOffer";
 
 
 const App = () => {
@@ -51,7 +53,9 @@ const App = () => {
             <Route path="/requests/leaves/edit/:id" element={<EditLeaveRequest />}/>
             <Route path="/requests/documents" element={<DocumentRequestsList />}/>
             <Route path="/requests/documents/add" element={<AddDocumentRequest />}/>
+            <Route path="/jobs/offers" element={<JobOffersList />}/>
             <Route path="/jobs/offers/add" element={<AddJobOffer />}/>
+            <Route path="/jobs/offers/edit/:id" element={<EditJobOffer />}/>
           </Routes>
         </Router>
         <ToastContainer

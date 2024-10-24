@@ -6,7 +6,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 
-const AddJobOfferForm = ({register, errors, description, setDescription, setValue}) => {
+const AddJobOfferForm = ({register, errors, description, setDescription, setValue, forEdit}) => {
     return (
         <div className={"row"}>
             <div className="col-md-6">
@@ -68,6 +68,30 @@ const AddJobOfferForm = ({register, errors, description, setDescription, setValu
                         </div>
                     </div>
                 </div>
+                {forEdit && (
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="form-group">
+                                <label htmlFor={"status"}>Status<span className={"red-star"}>*</span></label>
+                                <select
+                                    id="status"
+                                    className={`form-control ${errors.status ? 'is-invalid' : ''}`}
+                                    {...register('status', {
+                                        required: 'Status is required',
+                                        validate: (value) => value !== "" || 'Please select a status'
+                                    })}
+                                >
+                                    <option value="">Select a status</option>
+                                    <option value="Draft">Draft</option>
+                                    <option value="Open">Open</option>
+                                    <option value="Closed">Closed</option>
+                                </select>
+                                {errors.status && <span style={{ color: 'red', fontSize: '12px' }}>{errors.status.message}</span>}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 <div className="row">
                     <div className={"col-md-12"}>
                         <div className="form-group">
@@ -86,10 +110,10 @@ const AddJobOfferForm = ({register, errors, description, setDescription, setValu
                 </div>
                 <hr className="horizontal dark" />
             </div>
-            <div className="col-md-6">
-                <h4>Preview:</h4>
-                <div dangerouslySetInnerHTML={{ __html: description }} />
-            </div>
+            {/*<div className="col-md-6">*/}
+            {/*    <h4>Preview:</h4>*/}
+            {/*    <div dangerouslySetInnerHTML={{ __html: description }} />*/}
+            {/*</div>*/}
         </div>
     );
 };
