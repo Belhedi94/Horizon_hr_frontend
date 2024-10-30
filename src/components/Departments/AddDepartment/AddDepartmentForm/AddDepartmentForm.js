@@ -22,13 +22,18 @@ const AddDepartmentForm = ({register, errors}) => {
                         {errors.name && <span style={{ color: 'red', fontSize: '12px' }}>{errors.name.message}</span>}
                     </div>
                 </div>
+            </div>
+            <div className="row">
                 <div className="col-md-6">
                     <div className="form-group">
                         <label htmlFor={"description"}>Description<span className={"red-star"}>*</span></label>
-                        <input {...register('description', { required: 'Description is required' })}
-                               className={"form-control"}
-                               placeholder={"Please type the description"}
-                               id={"description"}
+                        <textarea
+                            {...register('description', { required: 'Description is required' })}
+                            className={"form-control"}
+                            placeholder={"Please type the description"}
+                            id={"description"}
+                            rows={7}
+
                         />
                         {errors.description && <span style={{ color: 'red', fontSize: '12px' }}>{errors.description.message}</span>}
                     </div>

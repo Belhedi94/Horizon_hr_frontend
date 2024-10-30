@@ -31,6 +31,9 @@ const PositionsDataList = ({props}) => {
             {
                 Header: "Description",
                 accessor: "description",
+                Cell: ({ value }) => (
+                    <div className={"wrapped-description"}>{value}</div>
+                ),
             },
             {
                 Header: "Action",

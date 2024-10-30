@@ -7,6 +7,7 @@ import SearchBox from "../../../Common/SearchBox/SearchBox";
 import Table from "../../../Common/Table/Table";
 import ReactPaginate from "react-paginate";
 import { Tooltip } from "react-tooltip";
+import "../department_list.css";
 
 const DepartmentsDataList = ({props}) => {
     const {data, loading, filterInput, handleFilterChange, openModal, setPageIndex, pageSize, totalItems} = props;
@@ -30,7 +31,19 @@ const DepartmentsDataList = ({props}) => {
             {
                 Header: "Description",
                 accessor: "description",
+                Cell: ({ value }) => (
+                    <div className={"wrapped-description"}
+                        data-tooltip-id="description_tooltip"
+                        data-tooltip-content={value}
+                    >
+                        {value}
+                    </div>
+                ),
             },
+            // {
+            //     Header: "Teams",
+            //     accessor: "teams"
+            // },
             {
                 Header: "Action",
                 accessor: "action",

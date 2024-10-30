@@ -32,7 +32,8 @@ const Table = ({props}) => {
                     return (
                         <tr {...row.getRowProps()} key={row.id}>
                             {row.cells.map((cell) => (
-                                <td {...cell.getCellProps()}
+                                <td
+                                    {...cell.getCellProps()}
                                     key={cell.column.id}
                                     className={"text-xs font-weight-bold mb-0"}
                                 >

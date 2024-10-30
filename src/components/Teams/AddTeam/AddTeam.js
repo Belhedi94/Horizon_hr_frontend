@@ -54,7 +54,12 @@ const AddTeam = () => {
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-body">
-                                <AddTeamForm register={register} setValue={setValue} errors={errors} departments={departments}/>
+                                <AddTeamForm
+                                    register={register}
+                                    setValue={setValue}
+                                    errors={errors}
+                                    departments={departments}
+                                />
                                 <button
                                     className={"btn btn-dark btn-sm ms-auto"}
                                     disabled={loading}
