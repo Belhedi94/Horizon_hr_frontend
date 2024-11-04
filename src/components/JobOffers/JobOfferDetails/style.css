@@ -1,0 +1,32 @@
+.horizon_image {
+    width: 60px;
+    border-radius: 10px;
+}
+
+.title {
+    margin-left: 10px;
+}
+
+.chevron {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.font_size {
+    font-size: 15px;
+}
+
+.job-title {
+    color: #1A6EB5;
+    font-weight: bold;
+}
+
+.post-link {
+    width: 100%;
+    padding: 7px;
+    border-radius: 20px;
+}
+.apply-button {
+    width: 100%;
+    border-radius: 20px;
+}

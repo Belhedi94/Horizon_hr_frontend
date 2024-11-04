@@ -26,6 +26,7 @@ import AddDocumentRequest from "./components/DocumentRequest/Admin/AddDocumentRe
 import AddJobOffer from "./components/JobOffers/AddJobOffer/AddJobOffer";
 import JobOffersList from "./components/JobOffers/JobOffersList/JobOffersList";
 import EditJobOffer from "./components/JobOffers/EditJobOffer/EditJobOffer";
+import JobOfferDetails from "./components/JobOffers/JobOfferDetails/JobOfferDetails";
 
 
 const App = () => {
@@ -56,6 +57,7 @@ const App = () => {
             <Route path="/jobs/offers" element={<JobOffersList />}/>
             <Route path="/jobs/offers/add" element={<AddJobOffer />}/>
             <Route path="/jobs/offers/edit/:id" element={<EditJobOffer />}/>
+            <Route path="/careers/:id" element={<JobOfferDetails />}/>
           </Routes>
         </Router>
         <ToastContainer
