@@ -240,7 +240,7 @@ export const deleteTeam = async(id) => {
 
 export const getLeaveBalanceData = async (userId) => {
     try {
-        const response = await axios.get(`${API_URL}/leaves/balances/${userId}`);
+        const response = await axios.get(`${API_URL}/leaves/balances/user/${userId}`);
 
         return response.data.data;
 

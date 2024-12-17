@@ -47,9 +47,9 @@ const LeaveRequestsDataList = ({props}) => {
                 Header: "Remaining annual",
                 accessor: "annual",
                 Cell: ({ row }) => {
-                    const {sick} = row.original.user.leaveBalance;
+                    const {annual} = row.original.user.leaveBalance;
                     return (
-                        <p className={"text-sm text-center"}>{sick.toFixed(2)}</p>
+                        <p className={"text-sm text-center"}>{annual.toFixed(2)}</p>
                     )
                 },
             },
@@ -57,9 +57,9 @@ const LeaveRequestsDataList = ({props}) => {
                 Header: "Remaining sick",
                 accessor: "sick",
                 Cell: ({ row }) => {
-                    const {annual} = row.original.user.leaveBalance;
+                    const {sick} = row.original.user.leaveBalance;
                     return (
-                        <p className={"text-sm text-center"}>{annual.toFixed(2)}</p>
+                        <p className={"text-sm text-center"}>{sick.toFixed(2)}</p>
                     )
                 },
             },
